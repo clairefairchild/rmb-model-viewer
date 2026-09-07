@@ -17,6 +17,12 @@ def routes():
  manifest=json.loads((site/'projects.json').read_text())
  for project in manifest['projects']:
   target=site/project['slug']/'index.html';atomic(target,html.replace('./assets/','../assets/'))
+ equipment_path=site/'equipment.json'
+ if equipment_path.exists():
+  equipment=json.loads(equipment_path.read_text())
+  atomic(site/'equipment'/'index.html',html.replace('./assets/','../assets/'))
+  for item in equipment['equipment']:
+   atomic(site/'equipment'/item['slug']/'index.html',html.replace('./assets/','../../assets/'))
  atomic(site/'404.html',html.replace('./assets/',URL+'/assets/'))
  atomic(site/'.nojekyll','')
 def verify_deployment():
@@ -32,6 +38,19 @@ def verify_deployment():
      if response.status!=200 or response.read()!=(ROOT/'site'/project['slug']/'index.html').read_bytes():raise RuntimeError('Project route is still updating')
     with urllib.request.urlopen(URL+'/'+project['asset'],timeout=30) as response:
      if response.status!=200 or response.headers.get_content_type()!='model/gltf-binary' or hashlib.sha256(response.read()).hexdigest()!=project['sha256']:raise RuntimeError('Model readback failed')
+   equipment_path=ROOT/'site/equipment.json'
+   if equipment_path.exists():
+    equipment=json.loads(equipment_path.read_text())
+    with urllib.request.urlopen(URL+'/equipment.json?publication='+str(time.time_ns()),timeout=20) as response:
+     if json.load(response)!=equipment:raise RuntimeError('Previous equipment catalog is still live')
+    with urllib.request.urlopen(URL+'/equipment/?publication='+str(time.time_ns()),timeout=20) as response:
+     if response.status!=200 or response.read()!=(ROOT/'site/equipment/index.html').read_bytes():raise RuntimeError('Equipment library route is still updating')
+    for item in equipment['equipment']:
+     with urllib.request.urlopen(URL+'/equipment/'+item['slug']+'/?publication='+str(time.time_ns()),timeout=20) as response:
+      if response.status!=200 or response.read()!=(ROOT/'site/equipment'/item['slug']/'index.html').read_bytes():raise RuntimeError('Equipment route is still updating')
+     with urllib.request.urlopen(URL+'/'+item['asset'],timeout=30) as response:
+      asset_bytes=response.read()
+      if response.status!=200 or response.headers.get_content_type()!='model/gltf-binary' or len(asset_bytes)!=item['sizeBytes'] or hashlib.sha256(asset_bytes).hexdigest()!=item['sha256']:raise RuntimeError('Equipment model readback failed')
    print('LIVE_DEPLOYMENT_VERIFIED');return
   except Exception as error:
    last_error=type(error).__name__+': '+str(error);time.sleep(5)
@@ -53,9 +72,10 @@ def deploy():
    run(['git','-C',target,'push','origin','gh-pages'])
  verify_deployment()
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('scene',nargs='?',help='.blend file or project directory containing scene.blend');p.add_argument('--slug');p.add_argument('--title');p.add_argument('--revision',default='Design model');p.add_argument('--description',default='An interactive first look at this space.');p.add_argument('--thumbnail',type=Path);p.add_argument('--replace',action='store_true');p.add_argument('--deploy',action='store_true');p.add_argument('--deploy-only',action='store_true');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('scene',nargs='?',help='.blend file or project directory containing scene.blend');p.add_argument('--slug');p.add_argument('--title');p.add_argument('--revision',default='Design model');p.add_argument('--description',default='An interactive first look at this space.');p.add_argument('--thumbnail',type=Path);p.add_argument('--replace',action='store_true');p.add_argument('--deploy',action='store_true');p.add_argument('--deploy-only',action='store_true');p.add_argument('--routes-only',action='store_true');args=p.parse_args()
  with open(ROOT/'.publish.lock','w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  if args.routes_only:routes();print('STATIC_ROUTES_GENERATED');raise SystemExit(0)
   if args.deploy_only:deploy();print(URL);raise SystemExit(0)
   if not args.scene or not args.slug or not args.title:p.error('scene, --slug, and --title are required')
   if not re.fullmatch('[a-z0-9]+(?:-[a-z0-9]+)*',args.slug) or args.slug in {'assets','models','index','projects'}:p.error('Use a safe lowercase hyphenated project slug')

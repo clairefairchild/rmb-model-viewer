@@ -6,18 +6,57 @@ import './style.css';
 const $=id=>document.getElementById(id);
 const script=document.querySelector('script[type="module"]');
 const base=new URL('../',script.src); // Shared bundle lives under assets/ on every host.
-$('brand').href=base.href;$('all-projects').href=base.href;
+$('brand').href=base.href;$('models-nav').href=base.href;$('equipment-nav').href=new URL('equipment/',base).href;$('all-projects').href=base.href;
 const relative=decodeURIComponent(location.pathname).slice(base.pathname.length).replace(/^\/+|\/+$/g,'');
-const slug=relative==='index.html'?'':relative.replace(/\/index.html$/,'');
+const route=relative==='index.html'?'':relative.replace(/\/index.html$/,'');
+const equipmentPrefix='equipment/';
+const equipmentSlug=route.startsWith(equipmentPrefix)?route.slice(equipmentPrefix.length):'';
+const pageType=route==='equipment'?'equipment-library':equipmentSlug?'equipment-detail':route?'project':'project-library';
+const slug=pageType==='project'?route:'';
 let renderer,scene,camera,controls,model,bounds,center,radius,walk=false,yaw=0,pitch=0,last=0;
-const pressed=new Set();let gesture=null;const state={ready:false,mode:'orbit',frames:0};
+let currentEquipment=null;
+const pressed=new Set();let gesture=null;const state={ready:false,mode:'orbit',frames:0,pageType};
 function fail(message){$('loading').hidden=true;$('error-message').textContent=message;$('error').hidden=false;}
 $('retry').onclick=()=>location.reload();
 try{
- const response=await fetch(new URL('projects.json',base),{cache:'no-cache'});
- if(!response.ok)throw new Error('Project catalog is temporarily unavailable. Please try again.');
- const manifest=await response.json();
- if(!slug){
+ if(pageType.startsWith('equipment')){
+  $('models-nav').classList.remove('active');$('models-nav').removeAttribute('aria-current');$('equipment-nav').classList.add('active');$('equipment-nav').setAttribute('aria-current','page');
+  const response=await fetch(new URL('equipment.json',base),{cache:'no-cache'});
+  if(!response.ok)throw new Error('Equipment catalog is temporarily unavailable. Please try again.');
+  const manifest=await response.json();
+  if(pageType==='equipment-library'){
+   $('equipment-library').hidden=false;$('library-footer').hidden=false;$('footer-context').textContent='RMB Suite · Equipment Review';document.title='Equipment | Roni’s Mac Bar';
+   for(const item of manifest.equipment){
+    const card=document.createElement('a');card.className='card equipment-card';card.href=new URL(`equipment/${item.slug}/`,base).href;
+    if(item.thumbnail){const img=document.createElement('img');img.src=new URL(item.thumbnail,base);img.alt=item.name+' 3D model preview';card.append(img);}
+    const body=document.createElement('div');body.className='card-body';
+    const status=document.createElement('span');status.className='approval-status';status.textContent=item.approvalStatus;
+    const heading=document.createElement('h2');heading.textContent=item.name;
+    const product=document.createElement('p');product.className='equipment-model';product.textContent=item.productName;
+    const dimensions=document.createElement('p');dimensions.className='equipment-dimensions';dimensions.textContent=`${item.envelope.width} × ${item.envelope.depth} × ${item.envelope.height} ${item.envelope.unit} · W × D × H`;
+    const metadata=document.createElement('p');metadata.className='equipment-meta';metadata.textContent=`Quantity ${item.quantity} · Source row ${item.sourceRow}`;
+    const open=document.createElement('span');open.className='open';open.textContent='Review in 3D ↗';
+    body.append(status,heading,product,dimensions,metadata,open);card.append(body);$('equipment-grid').append(card);
+   }
+  }else{
+   currentEquipment=manifest.equipment.find(item=>item.slug===equipmentSlug);
+   if(!currentEquipment)throw new Error('This equipment link is not in the catalog. Choose All equipment to find an available asset.');
+   document.body.classList.add('equipment-detail');$('viewer').hidden=false;$('library-footer').hidden=true;$('all-projects').href=new URL('equipment/',base).href;$('all-projects').textContent='All equipment';
+   document.querySelector('.project-info').hidden=true;$('equipment-details').hidden=false;$('canvas').setAttribute('aria-label',`Interactive 3D model of ${currentEquipment.name}`);
+   for(const element of document.querySelectorAll('.project-control'))element.hidden=true;
+   for(const element of document.querySelectorAll('.equipment-control'))element.hidden=false;
+   $('approval-status').textContent=currentEquipment.approvalStatus;$('equipment-title').textContent=currentEquipment.name;$('equipment-model').textContent=currentEquipment.productName;
+   $('equipment-envelope').textContent=`${currentEquipment.envelope.width} × ${currentEquipment.envelope.depth} × ${currentEquipment.envelope.height} ${currentEquipment.envelope.unit} (W × D × H)`;
+   $('equipment-source').textContent=currentEquipment.sourceRow;$('equipment-quantity').textContent=String(currentEquipment.quantity);$('equipment-fidelity').textContent=currentEquipment.fidelityNote;
+   $('disclaimer').textContent='Review asset · Approval required before operational use.';$('help').textContent='Drag to orbit · Right-drag / two fingers to pan · Scroll / pinch to zoom';
+   document.title=currentEquipment.name+' | Equipment Review';
+   loadViewer(currentEquipment);
+  }
+ }else{
+  const response=await fetch(new URL('projects.json',base),{cache:'no-cache'});
+  if(!response.ok)throw new Error('Project catalog is temporarily unavailable. Please try again.');
+  const manifest=await response.json();
+  if(pageType==='project-library'){
   $('library').hidden=false;
   for(const project of manifest.projects){
    const card=document.createElement('a');card.className='card';card.href=new URL(`${project.slug}/`,base).href;
@@ -36,8 +75,13 @@ try{
   $('title').textContent=project.title;$('subtitle').textContent=project.revision||'Interactive design model';
   $('disclaimer').textContent=project.disclaimer||'Explicit-design first pass · Not construction documents or verified as-built.';
   document.title=project.title+' | Roni’s Mac Bar';
+  loadViewer(project);
+ }
+ }
+}catch(error){$('viewer').hidden=false;$('library-footer').hidden=true;fail(error.message||'This browser could not start the 3D viewer. Try a recent version of Chrome.');}
+function loadViewer(record){
   initialize();
-  new GLTFLoader().load(new URL(project.asset,base).href,gltf=>{
+  new GLTFLoader().load(new URL(record.asset,base).href,gltf=>{
    model=gltf.scene;scene.add(model);bounds=new THREE.Box3().setFromObject(model);center=bounds.getCenter(new THREE.Vector3());radius=bounds.getSize(new THREE.Vector3()).length()/2;
    if(!Number.isFinite(radius)||radius<=0){fail('The model contains no viewable geometry.');return;}
    const size=bounds.getSize(new THREE.Vector3());
@@ -47,9 +91,8 @@ try{
    controls.minDistance=Math.max(.2,radius*.02);controls.maxDistance=radius*10;camera.near=.025;camera.far=Math.max(1000,radius*40);camera.updateProjectionMatrix();
    state.ready=true;state.meshes=0;model.traverse(o=>{if(o.isMesh)state.meshes++;});state.bounds={min:bounds.min.toArray(),max:bounds.max.toArray()};
    $('loading').hidden=true;home();
-  },event=>{if(event.total){$('progress').value=event.loaded/event.total*100;$('load-message').textContent=`Opening your space… ${Math.round(event.loaded/event.total*100)}%`;}},()=>fail('The 3D model could not be downloaded. Check your connection and try again.'));
- }
-}catch(error){$('viewer').hidden=false;$('library-footer').hidden=true;fail(error.message||'This browser could not start the 3D viewer. Try a recent version of Chrome.');}
+  },event=>{if(event.total){$('progress').value=event.loaded/event.total*100;$('load-message').textContent=`Opening 3D model… ${Math.round(event.loaded/event.total*100)}%`;}},()=>fail('The 3D model could not be downloaded. Check your connection and try again.'));
+}
 function initialize(){
  renderer=new THREE.WebGLRenderer({canvas:$('canvas'),antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
  scene=new THREE.Scene();scene.background=new THREE.Color(0xe8e9df);
@@ -60,7 +103,7 @@ function initialize(){
  controls=new OrbitControls(camera,$('canvas'));controls.enableDamping=true;controls.dampingFactor=.1;controls.maxPolarAngle=Math.PI/2-.01;controls.screenSpacePanning=true;
  new ResizeObserver(resize).observe($('viewer'));resize();
  $('canvas').addEventListener('webglcontextlost',e=>{e.preventDefault();fail('Graphics were interrupted. Reload to reopen this model.');});
- $('home').onclick=home;$('bird').onclick=bird;$('walk').onclick=()=>setWalk(!walk);
+ $('home').onclick=home;$('front').onclick=front;$('rear').onclick=rear;$('bird').onclick=bird;$('walk').onclick=()=>setWalk(!walk);
  $('orbit-mode').onclick=()=>navigation('orbit');$('pan-mode').onclick=()=>navigation('pan');
  $('zoom-in').onclick=()=>zoom(.8);$('zoom-out').onclick=()=>zoom(1.25);
  $('fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if($('app').requestFullscreen)await $('app').requestFullscreen();else{$('help').textContent='Use your browser’s full-screen option for this device.';}}catch{$('help').textContent='Fullscreen is unavailable in this browser.';}};
@@ -72,7 +115,7 @@ function initialize(){
   btn.addEventListener('pointerdown',e=>{e.preventDefault();btn.setPointerCapture(e.pointerId);pressed.add(btn.dataset.move);btn.classList.add('active');});
   for(const type of ['pointerup','pointercancel','lostpointercapture'])btn.addEventListener(type,()=>{pressed.delete(btn.dataset.move);btn.classList.remove('active');});
  }
- addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;const key=e.key.toLowerCase();if(walk&&['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright','shift'].includes(key)){e.preventDefault();pressed.add(key);}else if(key==='h')home();else if(key==='b')bird();else if(key==='w')setWalk(true);else if(key==='escape')setWalk(false);});
+ addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.ctrlKey||e.metaKey||e.altKey)return;const key=e.key.toLowerCase();if(walk&&['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright','shift'].includes(key)){e.preventDefault();pressed.add(key);}else if(key==='h')home();else if(currentEquipment&&key==='f')front();else if(currentEquipment&&key==='r')rear();else if(!currentEquipment&&key==='b')bird();else if(!currentEquipment&&key==='w')setWalk(true);else if(key==='escape')setWalk(false);});
  addEventListener('keyup',e=>pressed.delete(e.key.toLowerCase()));addEventListener('blur',()=>pressed.clear());document.addEventListener('visibilitychange',()=>pressed.clear());
  renderer.setAnimationLoop(animate);
  // Read-only snapshot for functional verification; no mutation hooks.
@@ -87,6 +130,8 @@ function fit(direction){
  camera.position.copy(center).add(direction.normalize().multiplyScalar(distance*1.35));controls.update();
 }
 function home(){if(!state.ready)return;setWalk(false);controls.reset();navigation('orbit');fit(new THREE.Vector3(camera.aspect<.8?.8:.25,1.05,1.25));state.mode='home';$('mode-label').textContent='ORBIT VIEW';}
+function front(){if(!state.ready||!currentEquipment)return;fit(new THREE.Vector3(0,.08,1));navigation('orbit');state.mode='front';$('mode-label').textContent='FRONT VIEW';}
+function rear(){if(!state.ready||!currentEquipment)return;fit(new THREE.Vector3(0,.08,-1));navigation('orbit');state.mode='rear';$('mode-label').textContent='REAR VIEW';}
 function bird(){if(!state.ready)return;setWalk(false);fit(new THREE.Vector3(0,1,.0001));state.mode='bird';$('mode-label').textContent='BIRD’S-EYE VIEW';}
 function zoom(factor){if(!state.ready||walk)return;const offset=camera.position.clone().sub(controls.target);offset.multiplyScalar(factor).clampLength(controls.minDistance,controls.maxDistance);camera.position.copy(controls.target).add(offset);controls.update();}
 function orient(){camera.rotation.order='YXZ';camera.rotation.set(pitch,yaw,0);}

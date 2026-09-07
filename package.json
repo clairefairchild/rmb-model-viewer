@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "vite build && python3 scripts/publish.py --routes-only",
     "test": "node scripts/verify-brand.mjs",
     "check": "npm test && npm run build",
     "validate": "node scripts/validate-glb.mjs",

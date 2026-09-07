@@ -5,6 +5,7 @@ A reusable static Three.js viewer for shareable architectural models. No account
 The library and viewer chrome use the authoritative Roni tenant identity from RMB Suite: white/black primary and secondary colors, `#fdb431` accent, the Roni noodle mark, the production Cheddar font family, and the same navigation, radius, shadow, spacing, and button treatments. The custom fonts load from RMB Suite's existing immutable `/api/fonts` route, which explicitly allows `https://models.ronismacbar.com` through CORS.
 
 - **Library:** https://models.ronismacbar.com/
+- **Equipment review library:** https://models.ronismacbar.com/equipment/
 - **First project:** https://models.ronismacbar.com/ronis-renovation-001/
 - **Repository:** https://github.com/clairefairchild/rmb-model-viewer
 - **Source directory:** `/Users/claire/.openclaw/workspace/rmb-model-viewer`
@@ -17,6 +18,8 @@ The library and viewer chrome use the authoritative Roni tenant identity from RM
 - **Home** resets framing; **Bird’s-eye** shows the plan from above.
 - **Walk through** sets an eye-level camera. Drag to look, use WASD/arrow keys or the on-screen directional pad to move. Shift moves faster; Escape exits. This is free navigation, **without wall collision or egress simulation**.
 - **Fullscreen** expands the viewer where supported. Devices that restrict the Fullscreen API retain the normal responsive view.
+
+Equipment reviews use the same orbit, pan, zoom, Home, and Fullscreen interactions, with dedicated **Front** and **Rear** presets. Architectural-only Bird’s-eye and walkthrough controls are intentionally omitted. Add future review assets to `public/equipment.json`; each entry owns its dimensions, source row, approval state, fidelity note, and content-hashed web assets without changing the architectural project catalog.
 
 The first model is an **explicit-design first pass**, not construction documentation or a verified as-built. The source shell omits fixtures, furniture, roof/ceilings, door leaves, frames, and glazing panes. Window and door openings are real voids. Preview lighting is not a lighting design.
 
@@ -68,13 +71,15 @@ npm run build
 python3 scripts/publish.py --deploy-only
 ```
 
-`npm run build` copies the canonical `public/` catalog and models into `site/`. The publisher then regenerates routes. Keep `site/` checked in so routine model publication needs no rebuild. All project titles/descriptions are inserted as text, never untrusted HTML.
+`npm run build` copies the canonical `public/` catalogs and web assets into `site/`, then generates direct-link route files for every project and equipment review. The publisher regenerates the same routes before deployment. Keep `site/` checked in so routine model publication needs no rebuild. All catalog text is inserted as text, never untrusted HTML.
 
 ## Architecture and limits
 
 - `src/` — one shared Three.js application and responsive styles.
 - `public/projects.json` — project manifest: slug, title, revision, description, content-hashed asset, optional thumbnail, byte length, SHA-256, disclaimer.
+- `public/equipment.json` — equipment review catalog: slug, product/model identity, exact envelope, source row, approval state, fidelity note, and content-hashed asset/thumbnail metadata.
 - `public/models/` — web assets only, not Blender source files.
+- `public/equipment-assets/` — approved web-ready equipment GLBs and review thumbnails only; no Blender, provenance, or source files.
 - `site/` — built static site, reusable for future publications.
 - `scripts/export_blend.py` — conservative headless Blender GLB export.
 - `scripts/publish.py` — export, validate, update, deploy, verify.
