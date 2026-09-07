@@ -1,15 +1,23 @@
 import {chromium,devices} from '@playwright/test';
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const url=process.argv[2]||'https://models.ronismacbar.com/ronis-renovation-001/';
+const projectUrl=process.argv[2]||'https://models.ronismacbar.com/ronis-renovation-001/';
+const libraryUrl=new URL('../',projectUrl).href;
+const localRun=['127.0.0.1','localhost'].includes(new URL(projectUrl).hostname);
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--enable-webgl','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 const output=new URL('../evidence/',import.meta.url);await fs.mkdir(output,{recursive:true});
-const report={url,time:new Date().toISOString(),checks:[],errors:[],screenshots:[]};
+const report={libraryUrl,projectUrl,time:new Date().toISOString(),checks:[],errors:[],screenshots:[]};
 try{
  for(const mobile of [false,true]){
   const context=await browser.newContext(mobile?{...devices['iPhone 13'],defaultBrowserType:undefined}:{viewport:{width:1440,height:960}});
-  const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.errors.push(m.text()+' '+JSON.stringify(m.location()));});
-  const response=await page.goto(url);assert.equal(response.status(),200);
+  const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{const fontCors=localRun&&(/api\/fonts\/|blocked by CORS policy/.test(m.text())||/api\/fonts\//.test(m.location().url||''));if(m.type()==='error'&&!fontCors)report.errors.push(m.text()+' '+JSON.stringify(m.location()));});
+  let response=await page.goto(libraryUrl);assert.equal(response.status(),200);
+  await page.locator('.card').waitFor();await page.waitForFunction(()=>[...document.querySelectorAll('.card img,.brand-mark')].every(i=>i.complete&&i.naturalWidth>0));await page.evaluate(()=>document.fonts.ready);
+  const libraryBrand=await page.evaluate(()=>{const root=getComputedStyle(document.documentElement),header=getComputedStyle(document.querySelector('.suite-header')),nav=getComputedStyle(document.querySelector('.suite-nav-link.active'));return{primary:root.getPropertyValue('--brand-primary').trim(),secondary:root.getPropertyValue('--brand-secondary').trim(),accent:root.getPropertyValue('--brand-accent').trim(),font:root.fontFamily,fontLoaded:document.fonts.check('16px "RMB Cheddar"'),header:header.backgroundColor,rule:header.borderBottomColor,active:nav.backgroundColor,overflow:document.documentElement.scrollWidth>innerWidth};});
+  report[mobile?'mobileBrand':'desktopBrand']=libraryBrand;
+  assert.match(libraryBrand.primary,/^#(?:fff|ffffff)$/);assert.match(libraryBrand.secondary,/^#(?:000|000000)$/);assert.equal(libraryBrand.accent,'#fdb431');assert.match(libraryBrand.font,/RMB Cheddar/);if(!localRun)assert.equal(libraryBrand.fontLoaded,true);assert.equal(libraryBrand.header,'rgb(26, 26, 26)');assert.match(libraryBrand.rule,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.match(libraryBrand.active,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.equal(libraryBrand.overflow,false);
+  const libraryShot=mobile?'mobile-library.png':'desktop-library.png';await page.screenshot({path:new URL(libraryShot,output).pathname,fullPage:true});report.screenshots.push(libraryShot);report.checks.push(`${mobile?'mobile':'desktop'} library loads with authoritative RMB Suite branding`);
+  response=await page.goto(projectUrl);assert.equal(response.status(),200);
   await page.waitForFunction(()=>window.modelViewer?.().ready,{},{timeout:30000});await page.waitForFunction(()=>window.modelViewer().frames>15);
   const snapshot=()=>page.evaluate(()=>window.modelViewer());
   const before=await snapshot();assert(before.meshes>0);report.meshes=before.meshes;
@@ -20,7 +28,7 @@ try{
   const preZoom=await snapshot();await page.locator('#zoom-in').click();assert.notDeepEqual((await snapshot()).position,preZoom.position);await page.locator('#zoom-out').click();report.checks.push('zoom controls operate');
   await page.locator('#bird').click();assert.equal((await snapshot()).mode,'bird');await page.waitForTimeout(200);await page.screenshot({path:new URL(mobile?'mobile-bird.png':'desktop-bird.png',output).pathname});
   await page.locator('#home').click();await page.waitForTimeout(300);assert.equal((await snapshot()).mode,'home');
-  await page.screenshot({path:new URL(mobile?'mobile-home.png':'desktop-home.png',output).pathname});report.screenshots.push(mobile?'mobile-home.png':'desktop-home.png');
+  const homeShot=mobile?'mobile-home.png':'desktop-home.png';await page.screenshot({path:new URL(homeShot,output).pathname});report.screenshots.push(homeShot);
   await page.locator('#walk').click();assert.equal((await snapshot()).walk,true);const preWalk=await snapshot();
   if(mobile){const pad=await page.locator('[data-move=forward]').boundingBox();await page.mouse.move(pad.x+pad.width/2,pad.y+pad.height/2);await page.mouse.down();await page.waitForTimeout(450);await page.mouse.up();}
   else{await page.keyboard.down('w');await page.waitForTimeout(450);await page.keyboard.up('w');}

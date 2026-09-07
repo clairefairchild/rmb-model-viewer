@@ -1,6 +1,8 @@
-# Roni’s Model Studio
+# Roni’s Mac Bar Models
 
 A reusable static Three.js viewer for shareable architectural models. No account or installation is needed to view a project in Chrome.
+
+The library and viewer chrome use the authoritative Roni tenant identity from RMB Suite: white/black primary and secondary colors, `#fdb431` accent, the Roni noodle mark, the production Cheddar font family, and the same navigation, radius, shadow, spacing, and button treatments. The custom fonts load from RMB Suite's existing immutable `/api/fonts` route, which explicitly allows `https://models.ronismacbar.com` through CORS.
 
 - **Library:** https://models.ronismacbar.com/
 - **First project:** https://models.ronismacbar.com/ronis-renovation-001/

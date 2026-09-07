@@ -26,7 +26,7 @@ try{
    const eyebrow=document.createElement('div');eyebrow.className='eyebrow';eyebrow.textContent='INTERACTIVE 3D / '+(project.revision||'DESIGN MODEL');
    const heading=document.createElement('h2');heading.textContent=project.title;
    const desc=document.createElement('p');desc.textContent=project.description||'Explore this design from every angle.';
-   const open=document.createElement('span');open.className='open';open.textContent='Explore the space ↗';
+   const open=document.createElement('span');open.className='open';open.textContent='View model ↗';
    body.append(eyebrow,heading,desc,open);card.append(body);$('projects').append(card);
   }
  }else{
@@ -35,7 +35,7 @@ try{
   if(!project)throw new Error('This project link is not in the catalog. Choose All projects to find an available space.');
   $('title').textContent=project.title;$('subtitle').textContent=project.revision||'Interactive design model';
   $('disclaimer').textContent=project.disclaimer||'Explicit-design first pass · Not construction documents or verified as-built.';
-  document.title=project.title+' | Roni’s Model Studio';
+  document.title=project.title+' | Roni’s Mac Bar';
   initialize();
   new GLTFLoader().load(new URL(project.asset,base).href,gltf=>{
    model=gltf.scene;scene.add(model);bounds=new THREE.Box3().setFromObject(model);center=bounds.getCenter(new THREE.Vector3());radius=bounds.getSize(new THREE.Vector3()).length()/2;
