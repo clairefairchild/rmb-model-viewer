@@ -17,9 +17,9 @@
       "title": "Tallahassee \u00b7 SketchUp design comparison",
       "revision": "SketchUp v001 \u00b7 furnished design",
       "description": "SketchUp-authored furnished design, including the lower, reshaped and extended front counter. Both layouts contained in the source are preserved: furnished design and its separate reference shell. Compare with the original renovation shell in the project library.",
-      "asset": "models/ronis-renovation-001-sketchup/823ce6179394.glb",
-      "sizeBytes": 15370220,
-      "sha256": "823ce617939458ff29ec7cf4288837077eca579fce73ccd7b693c1652b3c4895",
+      "asset": "models/ronis-renovation-001-sketchup/294d57381532.glb",
+      "sizeBytes": 15323788,
+      "sha256": "294d57381532eb8e33a80f82a51ed7e2869a3022b02a859150d15f6e8d484104",
       "disclaimer": "SketchUp-derived authored design \u00b7 Embedded inches preserved; dimensions measured from model geometry, not verified as-built. Finishes and inspection lighting are visualization approximations. Both source layouts retained.",
       "thumbnail": "models/ronis-renovation-001-sketchup/preview-61a76d0c76d6.png"
     }
