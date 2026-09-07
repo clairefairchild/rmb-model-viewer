@@ -11,6 +11,17 @@
       "sha256": "96ee23fa67fc5643bc268219432509846b05ca6b7e49cc7908cbca95bfb62e5a",
       "disclaimer": "Explicit-design first pass \u00b7 Not construction documents or verified as-built.",
       "thumbnail": "models/ronis-renovation-001/preview-2cee543c06c2.png"
+    },
+    {
+      "slug": "ronis-renovation-001-sketchup",
+      "title": "Tallahassee \u00b7 SketchUp design comparison",
+      "revision": "SketchUp v001 \u00b7 furnished design",
+      "description": "SketchUp-authored furnished design, including the lower, reshaped and extended front counter. Both layouts contained in the source are preserved: furnished design and its separate reference shell. Compare with the original renovation shell in the project library.",
+      "asset": "models/ronis-renovation-001-sketchup/823ce6179394.glb",
+      "sizeBytes": 15370220,
+      "sha256": "823ce617939458ff29ec7cf4288837077eca579fce73ccd7b693c1652b3c4895",
+      "disclaimer": "SketchUp-derived authored design \u00b7 Embedded inches preserved; dimensions measured from model geometry, not verified as-built. Finishes and inspection lighting are visualization approximations. Both source layouts retained.",
+      "thumbnail": "models/ronis-renovation-001-sketchup/preview-61a76d0c76d6.png"
     }
   ]
 }
