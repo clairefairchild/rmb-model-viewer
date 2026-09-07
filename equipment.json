@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "equipment": [
+    {
+      "slug": "vollrath-38002",
+      "name": "Vollrath 38002",
+      "productName": "ServeWell electric two-pan hot food table · Model 38002",
+      "manufacturer": "Vollrath",
+      "model": "38002",
+      "envelope": {
+        "width": 32,
+        "depth": 32,
+        "height": 34,
+        "unit": "in"
+      },
+      "sourceRow": "18068860263",
+      "quantity": 1,
+      "approvalStatus": "Awaiting Review",
+      "fidelityNote": "Overall envelope is dimensionally constrained. Subcomponent proportions and rear details are reconstructed from one product photo and manufacturer family drawings, not manufacturer CAD; concealed internals are omitted.",
+      "asset": "equipment-assets/vollrath-38002/620466f2ae3f.glb",
+      "thumbnail": "equipment-assets/vollrath-38002/preview-f6f6de7e5cbf.png",
+      "sizeBytes": 2417096,
+      "sha256": "620466f2ae3f9cc41b9a8c8f08b6046e85c7cbcd26f1b407bb24856d658bf95e"
+    }
+  ]
+}
