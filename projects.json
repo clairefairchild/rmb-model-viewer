@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "slug": "ronis-renovation-001",
+      "title": "Roni\u2019s Renovation 001",
+      "revision": "Shell v001 \u00b7 September 2026",
+      "description": "First-pass architectural shell. Explore the storefront, service area, and interior layout.",
+      "asset": "models/ronis-renovation-001/96ee23fa67fc.glb",
+      "sizeBytes": 241464,
+      "sha256": "96ee23fa67fc5643bc268219432509846b05ca6b7e49cc7908cbca95bfb62e5a",
+      "disclaimer": "Explicit-design first pass \u00b7 Not construction documents or verified as-built.",
+      "thumbnail": "models/ronis-renovation-001/preview-2cee543c06c2.png"
+    }
+  ]
+}

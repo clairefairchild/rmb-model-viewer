@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#183d35"><meta name="description" content="Explore Roni’s Mac Bar spaces in 3D. Orbit, zoom, and walk through our design models."><title>Roni’s | Model Studio</title>  <script type="module" crossorigin src="https://models.ronismacbar.com/assets/index-BJj6mWp1.js"></script>
+  <link rel="stylesheet" crossorigin href="https://models.ronismacbar.com/assets/index-BOMm4sOR.css">
+</head>
+<body>
+<div id="app">
+<header><a class="brand" id="brand" href="./"><span class="brand-mark">r.</span><span>RONI’S MAC BAR<small>MODEL STUDIO</small></span></a><span class="badge">DESIGN EXPLORER</span></header>
+<section id="library" hidden><p class="eyebrow">SPACES, TAKING SHAPE</p><h1>A closer look at<br>what’s next.</h1><p class="intro">Explore our spaces from every angle. Choose a project to step inside.</p><div id="projects"></div></section>
+<main id="viewer" hidden><canvas id="canvas" aria-label="Interactive 3D architectural model" tabindex="0"></canvas>
+<div class="project-info"><p class="eyebrow">RONI’S / SPATIAL DESIGN</p><h1 id="title">Loading project…</h1><p id="subtitle"></p></div>
+<div class="mode-pill" id="mode-label">ORBIT VIEW</div>
+<div id="loading" role="status"><div class="spinner"></div><strong id="load-message">Opening your space…</strong><progress id="progress" max="100"></progress></div>
+<div id="error" role="alert" hidden><h2>We couldn’t open this space.</h2><p id="error-message"></p><button id="retry">Try again</button><a id="all-projects" href="./">All projects</a></div>
+<div class="view-controls" aria-label="View controls"><button id="home" title="Reset to home view (H)">⌂ <span>Home</span></button><button id="bird" title="Bird’s-eye view (B)">▦ <span>Bird’s-eye</span></button><button id="walk" aria-pressed="false" title="Enter walkthrough (W)">↗ <span>Walk through</span></button><button id="fullscreen" title="Toggle fullscreen">⛶ <span>Fullscreen</span></button></div>
+<div class="nav-controls" aria-label="Camera controls"><button id="orbit-mode" aria-pressed="true">Orbit</button><button id="pan-mode" aria-pressed="false">Pan</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button></div>
+<div id="walk-pad" hidden aria-label="Walk movement"><button data-move="forward" aria-label="Walk forward">↑</button><button data-move="left" aria-label="Walk left">←</button><button data-move="backward" aria-label="Walk backward">↓</button><button data-move="right" aria-label="Walk right">→</button></div>
+<div class="bottom"><p id="help">Drag to orbit · Right-drag to pan · Scroll to zoom</p><p class="disclaimer" id="disclaimer">Explicit-design first pass · Not construction documents or verified as-built.</p></div>
+</main>
+<footer id="library-footer">Made for a better view. <span>Roni’s Mac Bar</span></footer>
+</div></body></html>
