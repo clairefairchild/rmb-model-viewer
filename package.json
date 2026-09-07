@@ -1,0 +1,20 @@
+{
+  "name": "rmb-model-viewer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "validate": "node scripts/validate-glb.mjs",
+    "publish:model": "python3 scripts/publish.py"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "gltf-validator": "2.0.0-dev.3.10",
+    "vite": "^8.2.2"
+  }
+}
