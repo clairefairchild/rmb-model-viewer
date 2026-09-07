@@ -22,7 +22,7 @@ for (const [token, value] of Object.entries(brandTokens)) {
   assert.match(css, new RegExp(`${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*${value.replace('#', '\\#')}`, 'i'), `${token} must match the Roni tenant`);
 }
 
-for (const weight of [300, 400, 700, 900]) {
+for (const weight of [300, 400, 500, 700, 900]) {
   assert.match(css, new RegExp(`font-weight:${weight}`), `Cheddar weight ${weight} must be declared`);
 }
 assert.match(css, /ronis\.rmbsuite\.com\/api\/fonts\/601448c6-d494-4372-ab00-e8297ebbf273/);
