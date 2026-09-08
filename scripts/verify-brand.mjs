@@ -115,8 +115,8 @@ assert.equal(hs17Equipment[0].sourceRow, '18068859762');
 assert.equal(hs17Equipment[0].quantity, 1);
 
 const certifiedBatch = new Map(equipment.equipment.slice(4).map(item => [item.slug, item]));
-assert.deepEqual([...certifiedBatch.keys()], ['avantco-sclm2-a-hc', 'avantco-scl2-60-a-hc', 'regency-s3c141612-12l-r', 'ts-brass-5pr-8w12-c', 'regency-wt-123638-s']);
-assert.deepEqual([...certifiedBatch.values()].map(item => item.sourceOrder), [1, 2, 3, 4, 11]);
+assert.deepEqual([...certifiedBatch.keys()], ['avantco-sclm2-a-hc', 'avantco-scl2-60-a-hc', 'regency-s3c141612-12l-r', 'ts-brass-5pr-8w12-c', 'regency-wt-123638-s', 'regency-sw1296-3-18-v']);
+assert.deepEqual([...certifiedBatch.values()].map(item => item.sourceOrder), [1, 2, 3, 4, 11, 20]);
 assert.equal(certifiedBatch.get('avantco-sclm2-a-hc').model, 'SCLM2-A-HC');
 assert.deepEqual(certifiedBatch.get('avantco-sclm2-a-hc').envelope, {width:47, depth:35, height:45.875, unit:'in'});
 assert.equal(certifiedBatch.get('avantco-scl2-60-a-hc').model, 'SCL2-60-A-HC');
@@ -128,6 +128,12 @@ assert.match(certifiedBatch.get('ts-brass-5pr-8w12-c').dimensionLabel, /pose mes
 assert.doesNotMatch(certifiedBatch.get('ts-brass-5pr-8w12-c').approvalStatus, /exact/i);
 assert.equal(certifiedBatch.get('regency-wt-123638-s').resellerSku, '600TB3612G');
 assert.deepEqual(certifiedBatch.get('regency-wt-123638-s').envelope, {width:12, depth:36, height:38, unit:'in'});
+assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').assetId, 'rmb-eq-regency-space-solutions-sw1296-3-18-v');
+assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').assetRevision, 'v002');
+assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').sourceRow, '18068860571');
+assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').quantity, 2);
+assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').approvalStatus, 'Certified Product Envelope');
+assert.deepEqual(certifiedBatch.get('regency-sw1296-3-18-v').envelope, {width:96, depth:12, height:11.625, unit:'in'});
 assert.equal(equipment.equipment.some(item => [8, 9, 10, 12, 13].includes(item.sourceOrder)), false, 'blocked source orders must not be published');
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 

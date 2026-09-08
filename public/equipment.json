@@ -217,6 +217,33 @@
       "thumbnail": "equipment-assets/regency-wt-123638-s/preview-b950a7fb2332.png",
       "sizeBytes": 5986044,
       "sha256": "98c2cf92ae35234b814780514498cca22a9216d0a22ec99d639b0dd9f2239952"
+    },
+    {
+      "slug": "regency-sw1296-3-18-v",
+      "assetId": "rmb-eq-regency-space-solutions-sw1296-3-18-v",
+      "name": "Regency Space Solutions SW1296-3-18-V",
+      "productName": "Solid stainless steel wall shelf · Model SW1296-3-18-V · SKU 600WS1296 · Asset v002",
+      "manufacturer": "Regency Space Solutions",
+      "model": "SW1296-3-18-V",
+      "resellerSku": "600WS1296",
+      "assetRevision": "v002",
+      "envelope": {
+        "width": 96,
+        "depth": 12,
+        "height": 11.625,
+        "unit": "in"
+      },
+      "dimensionLabel": "96 × 12 × 11.625 in — exact-product documented envelope; 1.5 in backsplash",
+      "dimensionHeading": "Certified dimensions",
+      "sourceOrder": 20,
+      "sourceRow": "18068860571",
+      "quantity": 2,
+      "approvalStatus": "Certified Product Envelope",
+      "fidelityNote": "Exact-SKU vendor-derived visualization certified to the published envelope, 1½ in backsplash, and three-bracket configuration; not fabrication or installation CAD. Nondimensioned bracket holes, bends, label, and other details retain vendor geometry. Mounting hardware is excluded; install height is unspecified.",
+      "asset": "equipment-assets/regency-sw1296-3-18-v/1fbc93b7bd2e.glb",
+      "thumbnail": "equipment-assets/regency-sw1296-3-18-v/preview-1ec23a3cf5c3.png",
+      "sizeBytes": 7341884,
+      "sha256": "1fbc93b7bd2e7baa5e8d4fb128ccdd38fb1c69a76ddba79f54af208258344a9b"
     }
   ]
 }
