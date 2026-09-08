@@ -61,6 +61,9 @@ for (const item of equipment.equipment) {
   const thumbnailBytes = fs.readFileSync(new URL(`../public/${item.thumbnail}`, import.meta.url));
   assert(thumbnailBytes.length > 0, `${item.slug} thumbnail must be nonempty`);
   assert.equal(item.thumbnail.split('/').at(-1).match(/^preview-([a-f0-9]{12})\./)[1], crypto.createHash('sha256').update(thumbnailBytes).digest('hex').slice(0, 12), `${item.slug} thumbnail filename must be content hashed`);
+  if (item.dimensionLabel !== undefined) assert.equal(typeof item.dimensionLabel, 'string', `${item.slug}.dimensionLabel must be a string`);
+  if (item.assemblyHeightLabel !== undefined) assert.equal(typeof item.assemblyHeightLabel, 'string', `${item.slug}.assemblyHeightLabel must be a string`);
+  if (item.visualizationOnly !== undefined) assert.equal(typeof item.visualizationOnly, 'boolean', `${item.slug}.visualizationOnly must be a boolean`);
 }
 const firstEquipment = equipment.equipment[0];
 assert.equal(firstEquipment.slug, 'vollrath-38002');
@@ -91,6 +94,21 @@ assert.equal(mainStreetEquipment[0].sourceRow, '18068862141');
 assert.equal(mainStreetEquipment[0].quantity, 2);
 assert.match(mainStreetEquipment[0].fidelityNote, /documented aluminum/);
 assert.match(mainStreetEquipment[0].fidelityNote, /hardware alloy is unverified/);
+const hs17Equipment = equipment.equipment.filter(item => item.slug === 'regency-hs-17');
+assert.equal(hs17Equipment.length, 1);
+assert.equal(hs17Equipment[0].name, 'Regency Tables & Sinks HS-17');
+assert.equal(hs17Equipment[0].productName, 'Hand sink · Model HS-17 · Asset v002');
+assert.equal(hs17Equipment[0].manufacturer, 'Regency Tables & Sinks');
+assert.equal(hs17Equipment[0].model, 'HS-17');
+assert.deepEqual(hs17Equipment[0].envelope, {width:17, depth:15, height:13.5, unit:'in'});
+assert.equal(hs17Equipment[0].dimensionLabel, '17 × 15 × 13.5 in — body only (includes backsplash)');
+assert.equal(hs17Equipment[0].assemblyHeightLabel, 'Official total assembly height: unresolved / not published');
+assert.equal(hs17Equipment[0].visualizationOnly, true);
+assert.match(hs17Equipment[0].fidelityNote, /Faucet, drain, and other hardware are visualization-only/);
+assert.doesNotMatch(JSON.stringify(hs17Equipment[0]), /16\.5/);
+assert.equal(hs17Equipment[0].approvalStatus, 'Certified Body Envelope');
+assert.equal(hs17Equipment[0].sourceRow, '18068859762');
+assert.equal(hs17Equipment[0].quantity, 1);
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));

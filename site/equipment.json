@@ -63,6 +63,30 @@
       "thumbnail": "equipment-assets/mainstreet-hc1836h/preview-d7490dcb053a.png",
       "sizeBytes": 3559004,
       "sha256": "d9434f4c5a8767e699e202abbf6f32a6be076ad732b490c546b07c723ef0c35c"
+    },
+    {
+      "slug": "regency-hs-17",
+      "name": "Regency Tables & Sinks HS-17",
+      "productName": "Hand sink · Model HS-17 · Asset v002",
+      "manufacturer": "Regency Tables & Sinks",
+      "model": "HS-17",
+      "envelope": {
+        "width": 17,
+        "depth": 15,
+        "height": 13.5,
+        "unit": "in"
+      },
+      "dimensionLabel": "17 × 15 × 13.5 in — body only (includes backsplash)",
+      "assemblyHeightLabel": "Official total assembly height: unresolved / not published",
+      "visualizationOnly": true,
+      "sourceRow": "18068859762",
+      "quantity": 1,
+      "approvalStatus": "Certified Body Envelope",
+      "fidelityNote": "Faucet, drain, and other hardware are visualization-only; they are excluded from the certified body envelope. Official total assembly height is unresolved and not claimed.",
+      "asset": "equipment-assets/regency-hs-17/0152d071eeaf.glb",
+      "thumbnail": "equipment-assets/regency-hs-17/preview-c9607c5b68f7.png",
+      "sizeBytes": 2018492,
+      "sha256": "0152d071eeafbb60df656531634d66942d5f2d3ff8d0c934dbb4de0923e3e2d9"
     }
   ]
 }

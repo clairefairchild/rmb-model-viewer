@@ -33,10 +33,11 @@ try{
     const status=document.createElement('span');status.className='approval-status';status.textContent=item.approvalStatus;
     const heading=document.createElement('h2');heading.textContent=item.name;
     const product=document.createElement('p');product.className='equipment-model';product.textContent=item.productName;
-    const dimensions=document.createElement('p');dimensions.className='equipment-dimensions';dimensions.textContent=`${item.envelope.width} × ${item.envelope.depth} × ${item.envelope.height} ${item.envelope.unit} · W × D × H`;
+    const dimensions=document.createElement('p');dimensions.className='equipment-dimensions';dimensions.textContent=item.dimensionLabel||`${item.envelope.width} × ${item.envelope.depth} × ${item.envelope.height} ${item.envelope.unit} · W × D × H`;
+    const assembly=document.createElement('p');assembly.className='equipment-scope';assembly.textContent=item.assemblyHeightLabel||'';assembly.hidden=!item.assemblyHeightLabel;
     const metadata=document.createElement('p');metadata.className='equipment-meta';metadata.textContent=`Quantity ${item.quantity} · Source row ${item.sourceRow}`;
     const open=document.createElement('span');open.className='open';open.textContent='Review in 3D ↗';
-    body.append(status,heading,product,dimensions,metadata,open);card.append(body);$('equipment-grid').append(card);
+    body.append(status,heading,product,dimensions,assembly,metadata,open);card.append(body);$('equipment-grid').append(card);
    }
   }else{
    currentEquipment=manifest.equipment.find(item=>item.slug===equipmentSlug);
@@ -46,9 +47,12 @@ try{
    for(const element of document.querySelectorAll('.project-control'))element.hidden=true;
    for(const element of document.querySelectorAll('.equipment-control'))element.hidden=false;
    $('approval-status').textContent=currentEquipment.approvalStatus;$('equipment-title').textContent=currentEquipment.name;$('equipment-model').textContent=currentEquipment.productName;
-   $('equipment-envelope').textContent=`${currentEquipment.envelope.width} × ${currentEquipment.envelope.depth} × ${currentEquipment.envelope.height} ${currentEquipment.envelope.unit} (W × D × H)`;
+   $('equipment-dimension-heading').textContent=currentEquipment.dimensionLabel?'Certified dimensions':'Exact envelope';
+   $('equipment-envelope').textContent=currentEquipment.dimensionLabel||`${currentEquipment.envelope.width} × ${currentEquipment.envelope.depth} × ${currentEquipment.envelope.height} ${currentEquipment.envelope.unit} (W × D × H)`;
+   $('equipment-assembly-height').textContent=currentEquipment.assemblyHeightLabel||'';$('equipment-assembly-row').hidden=!currentEquipment.assemblyHeightLabel;
    $('equipment-source').textContent=currentEquipment.sourceRow;$('equipment-quantity').textContent=String(currentEquipment.quantity);$('equipment-fidelity').textContent=currentEquipment.fidelityNote;
-   $('disclaimer').textContent='Review asset · Approval required before operational use.';$('help').textContent='Drag to orbit · Right-drag / two fingers to pan · Scroll / pinch to zoom';
+   $('equipment-note-heading').textContent=currentEquipment.visualizationOnly?'Visualization scope':'Fidelity note';
+   $('disclaimer').textContent=currentEquipment.visualizationOnly?'Certified dimensions apply to the body only · Displayed hardware is visualization-only.':'Review asset · Approval required before operational use.';$('help').textContent='Drag to orbit · Right-drag / two fingers to pan · Scroll / pinch to zoom';
    document.title=currentEquipment.name+' | Equipment Review';
    loadViewer(currentEquipment);
   }
