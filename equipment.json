@@ -21,6 +21,27 @@
       "thumbnail": "equipment-assets/vollrath-38002/preview-f6f6de7e5cbf.png",
       "sizeBytes": 2417096,
       "sha256": "620466f2ae3f9cc41b9a8c8f08b6046e85c7cbcd26f1b407bb24856d658bf95e"
+    },
+    {
+      "slug": "regency-822tbsdm1530",
+      "name": "Regency Tables & Sinks 822TBSDM1530",
+      "productName": "In-Line Sink · Model 822TBSDM1530",
+      "manufacturer": "Regency Tables & Sinks",
+      "model": "822TBSDM1530",
+      "envelope": {
+        "width": 15,
+        "depth": 30,
+        "height": 41.75,
+        "unit": "in"
+      },
+      "sourceRow": "18068862813",
+      "quantity": 1,
+      "approvalStatus": "Awaiting Review",
+      "fidelityNote": "Overall envelope is constrained. Secondary offsets, drain and assembly details, shelf and foot positions, bowl taper, edge radii, guard angles, and hidden construction are photo-derived or indicative because fabrication drawings and detailed rear/underside views were unavailable. No faucet is included.",
+      "asset": "equipment-assets/regency-822tbsdm1530/9008eadc3f8a.glb",
+      "thumbnail": "equipment-assets/regency-822tbsdm1530/preview-c1cfafe8cdb8.png",
+      "sizeBytes": 532860,
+      "sha256": "9008eadc3f8a44be4cfcab053fc0dac5cafa496d3b1a97a70a0bcc8c8c4ffc16"
     }
   ]
 }
