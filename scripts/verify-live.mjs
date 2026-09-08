@@ -1,4 +1,4 @@
-import {chromium,devices} from '@playwright/test';
+import {chromium} from '@playwright/test';
 import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import path from 'node:path';
@@ -11,10 +11,10 @@ const output=process.argv[3]?pathToFileURL(path.resolve(process.argv[3])+path.se
 const report={libraryUrl,projectUrl,time:new Date().toISOString(),checks:[],errors:[],screenshots:[]};
 try{
  for(const mobile of [false,true]){
-  const context=await browser.newContext(mobile?{...devices['iPhone 13'],defaultBrowserType:undefined}:{viewport:{width:1440,height:960}});
+  const context=await browser.newContext(mobile?{viewport:{width:390,height:844},isMobile:true,hasTouch:true}:{viewport:{width:1440,height:960}});
   const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));page.on('console',m=>{const fontCors=localRun&&(/api\/fonts\/|blocked by CORS policy/.test(m.text())||/api\/fonts\//.test(m.location().url||''));if(m.type()==='error'&&!fontCors)report.errors.push(m.text()+' '+JSON.stringify(m.location()));});
   let response=await page.goto(libraryUrl);assert.equal(response.status(),200);
-  await page.locator('.card').first().waitFor();await page.waitForFunction(()=>[...document.querySelectorAll('.card img,.brand-mark')].every(i=>i.complete&&i.naturalWidth>0));await page.evaluate(()=>document.fonts.ready);
+  await page.locator('.card').first().waitFor();await page.waitForFunction(()=>[...document.querySelectorAll('.card img,.brand-mark')].every(i=>i.complete&&i.naturalWidth>0));await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(250);
   const libraryBrand=await page.evaluate(()=>{const root=getComputedStyle(document.documentElement),header=getComputedStyle(document.querySelector('.suite-header')),nav=getComputedStyle(document.querySelector('.suite-nav-link.active'));return{primary:root.getPropertyValue('--brand-primary').trim(),secondary:root.getPropertyValue('--brand-secondary').trim(),accent:root.getPropertyValue('--brand-accent').trim(),font:root.fontFamily,fontLoaded:document.fonts.check('16px "RMB Cheddar"'),header:header.backgroundColor,rule:header.borderBottomColor,active:nav.backgroundColor,overflow:document.documentElement.scrollWidth>innerWidth};});
   report[mobile?'mobileBrand':'desktopBrand']=libraryBrand;
   assert.match(libraryBrand.primary,/^#(?:fff|ffffff)$/);assert.match(libraryBrand.secondary,/^#(?:000|000000)$/);assert.equal(libraryBrand.accent,'#fdb431');assert.match(libraryBrand.font,/RMB Cheddar/);if(!localRun)assert.equal(libraryBrand.fontLoaded,true);assert.equal(libraryBrand.header,'rgb(26, 26, 26)');assert.match(libraryBrand.rule,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.match(libraryBrand.active,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.equal(libraryBrand.overflow,false);
@@ -24,7 +24,8 @@ try{
   const snapshot=()=>page.evaluate(()=>window.modelViewer());
   const before=await snapshot();assert(before.meshes>0);report.meshes=before.meshes;const equipment=before.pageType==='equipment-detail';
   if(equipment){
-   assert.equal(await page.locator('#equipment-title').textContent(),'Vollrath 38002');assert.equal(await page.locator('#equipment-envelope').textContent(),'32 × 32 × 34 in (W × D × H)');assert.equal(await page.locator('#equipment-source').textContent(),'18068860263');assert.equal(await page.locator('#equipment-quantity').textContent(),'1');assert.equal(await page.locator('#approval-status').textContent(),'Awaiting Review');
+   const slug=new URL(projectUrl).pathname.split('/').filter(Boolean).at(-1);const catalog=await page.evaluate(async()=>{const response=await fetch('/equipment.json',{cache:'no-store'});if(!response.ok)throw new Error(`Equipment catalog returned ${response.status}`);return response.json();});const item=catalog.equipment.find(entry=>entry.slug===slug);assert(item,`Missing equipment catalog entry for ${slug}`);
+   assert.equal(await page.locator('#equipment-title').textContent(),item.name);assert.equal(await page.locator('#equipment-model').textContent(),item.productName);assert.equal(await page.locator('#equipment-envelope').textContent(),`${item.envelope.width} × ${item.envelope.depth} × ${item.envelope.height} ${item.envelope.unit} (W × D × H)`);assert.equal(await page.locator('#equipment-source').textContent(),item.sourceRow);assert.equal(await page.locator('#equipment-quantity').textContent(),String(item.quantity));assert.equal(await page.locator('#approval-status').textContent(),item.approvalStatus);assert.equal(await page.locator('#equipment-fidelity').textContent(),item.fidelityNote);
    for(const id of ['bird','walk'])assert.equal(await page.locator('#'+id).isVisible(),false);for(const id of ['front','rear'])assert(await page.locator('#'+id).isVisible());report.checks.push('equipment review metadata and equipment-only controls are correct');
   }
   const box=await page.locator('#canvas').boundingBox();

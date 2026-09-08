@@ -69,6 +69,16 @@ assert.deepEqual(firstEquipment.envelope, {width:32, depth:32, height:34, unit:'
 assert.equal(firstEquipment.approvalStatus, 'Awaiting Review');
 assert.equal(firstEquipment.sourceRow, '18068860263');
 assert.equal(firstEquipment.quantity, 1);
+const regencyEquipment = equipment.equipment.filter(item => item.slug === 'regency-822tbsdm1530');
+assert.equal(regencyEquipment.length, 1);
+assert.equal(regencyEquipment[0].name, 'Regency Tables & Sinks 822TBSDM1530');
+assert.equal(regencyEquipment[0].productName, 'In-Line Sink · Model 822TBSDM1530');
+assert.equal(regencyEquipment[0].manufacturer, 'Regency Tables & Sinks');
+assert.equal(regencyEquipment[0].model, '822TBSDM1530');
+assert.deepEqual(regencyEquipment[0].envelope, {width:15, depth:30, height:41.75, unit:'in'});
+assert.equal(regencyEquipment[0].approvalStatus, 'Awaiting Review');
+assert.equal(regencyEquipment[0].sourceRow, '18068862813');
+assert.equal(regencyEquipment[0].quantity, 1);
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));
