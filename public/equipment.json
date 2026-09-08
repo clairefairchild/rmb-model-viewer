@@ -42,6 +42,27 @@
       "thumbnail": "equipment-assets/regency-822tbsdm1530/preview-c1cfafe8cdb8.png",
       "sizeBytes": 532860,
       "sha256": "9008eadc3f8a44be4cfcab053fc0dac5cafa496d3b1a97a70a0bcc8c8c4ffc16"
+    },
+    {
+      "slug": "mainstreet-hc1836h",
+      "name": "MainStreet Equipment HC1836H",
+      "productName": "Heated holding cabinet · Model HC1836H",
+      "manufacturer": "MainStreet Equipment",
+      "model": "HC1836H",
+      "envelope": {
+        "width": 22.6875,
+        "depth": 32.75,
+        "height": 66.4375,
+        "unit": "in"
+      },
+      "sourceRow": "18068862141",
+      "quantity": 2,
+      "approvalStatus": "Awaiting Review",
+      "fidelityNote": "Overall bumper/caster envelope is constrained. Cabinet and rails are documented aluminum; stainless-look generic hardware alloy is unverified. Minor features, caster positions, and interior/rear details are reference-proportioned. Hidden internals and flexible power cord are omitted; the right-hinged door is static.",
+      "asset": "equipment-assets/mainstreet-hc1836h/d9434f4c5a87.glb",
+      "thumbnail": "equipment-assets/mainstreet-hc1836h/preview-d7490dcb053a.png",
+      "sizeBytes": 3559004,
+      "sha256": "d9434f4c5a8767e699e202abbf6f32a6be076ad732b490c546b07c723ef0c35c"
     }
   ]
 }

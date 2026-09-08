@@ -79,6 +79,18 @@ assert.deepEqual(regencyEquipment[0].envelope, {width:15, depth:30, height:41.75
 assert.equal(regencyEquipment[0].approvalStatus, 'Awaiting Review');
 assert.equal(regencyEquipment[0].sourceRow, '18068862813');
 assert.equal(regencyEquipment[0].quantity, 1);
+const mainStreetEquipment = equipment.equipment.filter(item => item.slug === 'mainstreet-hc1836h');
+assert.equal(mainStreetEquipment.length, 1);
+assert.equal(mainStreetEquipment[0].name, 'MainStreet Equipment HC1836H');
+assert.equal(mainStreetEquipment[0].productName, 'Heated holding cabinet · Model HC1836H');
+assert.equal(mainStreetEquipment[0].manufacturer, 'MainStreet Equipment');
+assert.equal(mainStreetEquipment[0].model, 'HC1836H');
+assert.deepEqual(mainStreetEquipment[0].envelope, {width:22.6875, depth:32.75, height:66.4375, unit:'in'});
+assert.equal(mainStreetEquipment[0].approvalStatus, 'Awaiting Review');
+assert.equal(mainStreetEquipment[0].sourceRow, '18068862141');
+assert.equal(mainStreetEquipment[0].quantity, 2);
+assert.match(mainStreetEquipment[0].fidelityNote, /documented aluminum/);
+assert.match(mainStreetEquipment[0].fidelityNote, /hardware alloy is unverified/);
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));
