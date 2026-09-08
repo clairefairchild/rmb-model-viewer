@@ -62,6 +62,10 @@ for (const item of equipment.equipment) {
   assert(thumbnailBytes.length > 0, `${item.slug} thumbnail must be nonempty`);
   assert.equal(item.thumbnail.split('/').at(-1).match(/^preview-([a-f0-9]{12})\./)[1], crypto.createHash('sha256').update(thumbnailBytes).digest('hex').slice(0, 12), `${item.slug} thumbnail filename must be content hashed`);
   if (item.dimensionLabel !== undefined) assert.equal(typeof item.dimensionLabel, 'string', `${item.slug}.dimensionLabel must be a string`);
+  if (item.dimensionHeading !== undefined) assert.equal(typeof item.dimensionHeading, 'string', `${item.slug}.dimensionHeading must be a string`);
+  if (item.resellerSku !== undefined) assert.equal(typeof item.resellerSku, 'string', `${item.slug}.resellerSku must be a string`);
+  if (item.assetRevision !== undefined) assert.match(item.assetRevision, /^v\d{3}$/, `${item.slug}.assetRevision must identify an immutable revision`);
+  if (item.sourceOrder !== undefined) assert(Number.isInteger(item.sourceOrder) && item.sourceOrder >= 0, `${item.slug}.sourceOrder must be a nonnegative integer`);
   if (item.assemblyHeightLabel !== undefined) assert.equal(typeof item.assemblyHeightLabel, 'string', `${item.slug}.assemblyHeightLabel must be a string`);
   if (item.visualizationOnly !== undefined) assert.equal(typeof item.visualizationOnly, 'boolean', `${item.slug}.visualizationOnly must be a boolean`);
 }
@@ -109,6 +113,22 @@ assert.doesNotMatch(JSON.stringify(hs17Equipment[0]), /16\.5/);
 assert.equal(hs17Equipment[0].approvalStatus, 'Certified Body Envelope');
 assert.equal(hs17Equipment[0].sourceRow, '18068859762');
 assert.equal(hs17Equipment[0].quantity, 1);
+
+const certifiedBatch = new Map(equipment.equipment.slice(4).map(item => [item.slug, item]));
+assert.deepEqual([...certifiedBatch.keys()], ['avantco-sclm2-a-hc', 'avantco-scl2-60-a-hc', 'regency-s3c141612-12l-r', 'ts-brass-5pr-8w12-c', 'regency-wt-123638-s']);
+assert.deepEqual([...certifiedBatch.values()].map(item => item.sourceOrder), [1, 2, 3, 4, 11]);
+assert.equal(certifiedBatch.get('avantco-sclm2-a-hc').model, 'SCLM2-A-HC');
+assert.deepEqual(certifiedBatch.get('avantco-sclm2-a-hc').envelope, {width:47, depth:35, height:45.875, unit:'in'});
+assert.equal(certifiedBatch.get('avantco-scl2-60-a-hc').model, 'SCL2-60-A-HC');
+assert.deepEqual(certifiedBatch.get('avantco-scl2-60-a-hc').envelope, {width:60.25, depth:31, height:42.375, unit:'in'});
+assert.equal(certifiedBatch.get('regency-s3c141612-12l-r').assetRevision, 'v002');
+assert.deepEqual(certifiedBatch.get('regency-s3c141612-12l-r').envelope, {width:70, depth:21.5, height:43.75, unit:'in'});
+assert.equal(certifiedBatch.get('ts-brass-5pr-8w12-c').assetRevision, 'v002');
+assert.match(certifiedBatch.get('ts-brass-5pr-8w12-c').dimensionLabel, /pose mesh AABB; not a manufacturer maximum envelope/);
+assert.doesNotMatch(certifiedBatch.get('ts-brass-5pr-8w12-c').approvalStatus, /exact/i);
+assert.equal(certifiedBatch.get('regency-wt-123638-s').resellerSku, '600TB3612G');
+assert.deepEqual(certifiedBatch.get('regency-wt-123638-s').envelope, {width:12, depth:36, height:38, unit:'in'});
+assert.equal(equipment.equipment.some(item => [8, 9, 10, 12, 13].includes(item.sourceOrder)), false, 'blocked source orders must not be published');
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));

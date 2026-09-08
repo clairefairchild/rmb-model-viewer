@@ -47,7 +47,7 @@ try{
    for(const element of document.querySelectorAll('.project-control'))element.hidden=true;
    for(const element of document.querySelectorAll('.equipment-control'))element.hidden=false;
    $('approval-status').textContent=currentEquipment.approvalStatus;$('equipment-title').textContent=currentEquipment.name;$('equipment-model').textContent=currentEquipment.productName;
-   $('equipment-dimension-heading').textContent=currentEquipment.dimensionLabel?'Certified dimensions':'Exact envelope';
+   $('equipment-dimension-heading').textContent=currentEquipment.dimensionHeading||(currentEquipment.dimensionLabel?'Certified dimensions':'Exact envelope');
    $('equipment-envelope').textContent=currentEquipment.dimensionLabel||`${currentEquipment.envelope.width} × ${currentEquipment.envelope.depth} × ${currentEquipment.envelope.height} ${currentEquipment.envelope.unit} (W × D × H)`;
    $('equipment-assembly-height').textContent=currentEquipment.assemblyHeightLabel||'';$('equipment-assembly-row').hidden=!currentEquipment.assemblyHeightLabel;
    $('equipment-source').textContent=currentEquipment.sourceRow;$('equipment-quantity').textContent=String(currentEquipment.quantity);$('equipment-fidelity').textContent=currentEquipment.fidelityNote;
