@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import './style.css';
@@ -85,7 +86,9 @@ try{
 }catch(error){$('viewer').hidden=false;$('library-footer').hidden=true;fail(error.message||'This browser could not start the 3D viewer. Try a recent version of Chrome.');}
 function loadViewer(record){
   initialize();
-  new GLTFLoader().load(new URL(record.asset,base).href,gltf=>{
+  const dracoLoader=new DRACOLoader();dracoLoader.setDecoderPath(new URL('draco/',base).href);
+  const gltfLoader=new GLTFLoader();gltfLoader.setDRACOLoader(dracoLoader);
+  gltfLoader.load(new URL(record.asset,base).href,gltf=>{
    model=gltf.scene;scene.add(model);bounds=new THREE.Box3().setFromObject(model);center=bounds.getCenter(new THREE.Vector3());radius=bounds.getSize(new THREE.Vector3()).length()/2;
    if(!Number.isFinite(radius)||radius<=0){fail('The model contains no viewable geometry.');return;}
    const size=bounds.getSize(new THREE.Vector3());
@@ -94,7 +97,7 @@ function loadViewer(record){
    const sun=scene.getObjectByName("studio-sun");sun.position.copy(center).add(new THREE.Vector3(-radius,radius*2,radius));sun.target.position.copy(center);Object.assign(sun.shadow.camera,{left:-radius*1.4,right:radius*1.4,top:radius*1.4,bottom:-radius*1.4,near:.1,far:radius*6});sun.shadow.camera.updateProjectionMatrix();model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
    controls.minDistance=Math.max(.2,radius*.02);controls.maxDistance=radius*10;camera.near=.025;camera.far=Math.max(1000,radius*40);camera.updateProjectionMatrix();
    state.ready=true;state.meshes=0;model.traverse(o=>{if(o.isMesh)state.meshes++;});state.bounds={min:bounds.min.toArray(),max:bounds.max.toArray()};
-   $('loading').hidden=true;home();
+   $('loading').hidden=true;home();dracoLoader.dispose();
   },event=>{if(event.total){$('progress').value=event.loaded/event.total*100;$('load-message').textContent=`Opening 3D model… ${Math.round(event.loaded/event.total*100)}%`;}},()=>fail('The 3D model could not be downloaded. Check your connection and try again.'));
 }
 function initialize(){

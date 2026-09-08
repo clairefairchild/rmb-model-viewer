@@ -33,7 +33,7 @@ assert.doesNotMatch(html + css + js, /Model Studio|#183d35|Georgia,serif/i);
 for (const id of ['canvas', 'home', 'front', 'rear', 'bird', 'walk', 'fullscreen', 'orbit-mode', 'pan-mode', 'zoom-in', 'zoom-out', 'walk-pad', 'loading', 'error', 'disclaimer', 'equipment-library', 'equipment-grid', 'equipment-details', 'library-footer', 'footer-context']) {
   assert.match(html, new RegExp(`id="${id}"`), `required viewer element #${id} must remain present`);
 }
-for (const behavior of ['OrbitControls', 'setWalk', 'requestFullscreen', 'webglcontextlost', 'GLTFLoader']) {
+for (const behavior of ['OrbitControls', 'setWalk', 'requestFullscreen', 'webglcontextlost', 'GLTFLoader', 'DRACOLoader', 'setDRACOLoader']) {
   assert.match(js, new RegExp(behavior), `required viewer behavior ${behavior} must remain wired`);
 }
 
@@ -114,7 +114,7 @@ assert.equal(hs17Equipment[0].approvalStatus, 'Certified Body Envelope');
 assert.equal(hs17Equipment[0].sourceRow, '18068859762');
 assert.equal(hs17Equipment[0].quantity, 1);
 
-const certifiedBatch = new Map(equipment.equipment.slice(4).map(item => [item.slug, item]));
+const certifiedBatch = new Map(equipment.equipment.slice(4, 10).map(item => [item.slug, item]));
 assert.deepEqual([...certifiedBatch.keys()], ['avantco-sclm2-a-hc', 'avantco-scl2-60-a-hc', 'regency-s3c141612-12l-r', 'ts-brass-5pr-8w12-c', 'regency-wt-123638-s', 'regency-sw1296-3-18-v']);
 assert.deepEqual([...certifiedBatch.values()].map(item => item.sourceOrder), [1, 2, 3, 4, 11, 20]);
 assert.equal(certifiedBatch.get('avantco-sclm2-a-hc').model, 'SCLM2-A-HC');
@@ -134,7 +134,12 @@ assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').sourceRow, '18068860571
 assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').quantity, 2);
 assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').approvalStatus, 'Certified Product Envelope');
 assert.deepEqual(certifiedBatch.get('regency-sw1296-3-18-v').envelope, {width:96, depth:12, height:11.625, unit:'in'});
-assert.equal(equipment.equipment.some(item => [8, 9, 10, 12, 13].includes(item.sourceOrder)), false, 'blocked source orders must not be published');
+const newlyAcceptedOrders = [8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 41, 42, 46];
+assert.equal(equipment.equipment.length, 39, 'equipment catalog must retain 10 entries and add 29 accepted assets');
+assert.deepEqual(equipment.equipment.slice(10).map(item => item.sourceOrder), newlyAcceptedOrders, 'accepted equipment batch must remain deterministic');
+assert.equal(new Set(equipment.equipment.map(item => item.sourceRow)).size, equipment.equipment.length, 'equipment source rows must be unique');
+assert.equal(new Set(equipment.equipment.map(item => item.asset)).size, equipment.equipment.length, 'equipment asset URLs must be unique');
+assert.equal(equipment.equipment.some(item => [10, 35, 39, 40, 43, 44, 50, 51].includes(item.sourceOrder)), false, 'blocked and excluded source orders must not be published');
 assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:true}).some(path => /\.blend$/i.test(path)), false, 'public output must not contain Blender source');
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));
