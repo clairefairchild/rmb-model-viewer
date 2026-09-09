@@ -85,7 +85,7 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 .project-info .eyebrow{margin-bottom:4px;color:var(--text-muted)}
 .project-info h1{margin:0;font-size:29px;font-weight:900;line-height:1.1;letter-spacing:-.015em}
 .project-info #subtitle{margin:7px 0 0;color:var(--text-secondary);font-size:12px;font-weight:500}
-#equipment-details{position:absolute;top:24px;left:32px;width:min(360px,calc(100% - 176px));padding:20px;background:rgba(255,255,255,.95);border:1px solid var(--gray-200);border-top:3px solid var(--brand-accent);border-radius:var(--radius-md);box-shadow:var(--shadow-md);backdrop-filter:blur(8px)}
+#equipment-details{max-height:calc(100% - 160px);overflow:auto;position:absolute;top:24px;left:32px;width:min(360px,calc(100% - 176px));padding:20px;background:rgba(255,255,255,.95);border:1px solid var(--gray-200);border-top:3px solid var(--brand-accent);border-radius:var(--radius-md);box-shadow:var(--shadow-md);backdrop-filter:blur(8px)}
 #equipment-details .eyebrow{margin-bottom:9px}
 #equipment-details .approval-status{margin-bottom:10px}
 #equipment-details h1{margin:0;font-size:27px;font-weight:900;line-height:1.1;letter-spacing:-.015em}
@@ -96,6 +96,8 @@ canvas{display:block;width:100%;height:100%;touch-action:none}
 #equipment-details dd{margin:0;color:var(--text-primary);font-size:12px;font-weight:700;text-align:right}
 .fidelity-note{margin:15px 0 0;padding:12px;border-radius:var(--radius-sm);background:var(--gray-100);color:var(--text-secondary);font-size:11px;line-height:1.45}
 .fidelity-note strong,.fidelity-note span{display:block}
+.fidelity-note summary{cursor:pointer;font-weight:700;color:var(--text-primary)}
+#equipment-limitation-notes p:last-child{margin-bottom:0}
 .fidelity-note strong{margin-bottom:4px;color:var(--text-primary);font-size:10px;letter-spacing:.04em;text-transform:uppercase}
 .mode-pill{position:absolute;top:24px;right:32px;padding:8px 12px;background:var(--black);color:var(--white);border-bottom:3px solid var(--brand-accent);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);font-size:10px;font-weight:700;letter-spacing:.06em}
 .view-controls{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);display:flex;gap:4px;padding:6px;background:rgba(255,255,255,.96);border:1px solid var(--gray-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);white-space:nowrap;backdrop-filter:blur(8px)}

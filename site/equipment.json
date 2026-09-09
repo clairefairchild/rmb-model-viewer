@@ -1026,6 +1026,195 @@
       "thumbnail": "equipment-assets/displays2go-p-21721/preview-f9defd61117c.png",
       "sizeBytes": 860432,
       "sha256": "5eb7af95c5598398cf0618256d97212e762dee8f2dafaaa008fcc4a5d56b896a"
+    },
+    {
+      "slug": "regency-plumbing-hardware-600dwkbf12",
+      "assetId": "rmb-eq-regency-plumbing-hardware-600dwkbf12",
+      "name": "Regency Plumbing & Hardware 600DWKBF12",
+      "productName": "Dipper well bowl and faucet set · Model 600DWKBF12 · Asset v004",
+      "manufacturer": "Regency Plumbing & Hardware",
+      "model": "600DWKBF12",
+      "resellerSku": "600dwkbf12",
+      "assetRevision": "v004",
+      "envelope": {
+        "width": 9.875,
+        "depth": 5.625,
+        "height": 5.75,
+        "unit": "in"
+      },
+      "dimensionLabel": "9.875 × 5.625 × 5.75 in (W × D × H) — Approximate planning envelope",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 10,
+      "sourceRow": "18068861506",
+      "quantity": 2,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "Approximate bowl/faucet set in a user-selected planning envelope, not verified assembly dimensions or demonstrated conservative installed bounds. Component placement is illustrative. No plumbing, counter-cutout, installation, service-clearance or fabrication certification.",
+      "asset": "equipment-assets/regency-plumbing-hardware-600dwkbf12/b32816fe6872.glb",
+      "thumbnail": "equipment-assets/regency-plumbing-hardware-600dwkbf12/preview-8a5178574714.png",
+      "sizeBytes": 345444,
+      "sha256": "b32816fe6872c078f6ae75b5f45f10d194217a4554a9847b35636a71284e34a5",
+      "limitationNotes": [
+        "Restaurant-layout approximate; NOT fabrication-certified. One bowl/faucet set. Rolled rim, open cylindrical bowl and overflow liner, short drain, cross handle, downturned spout, gasket and supply mounting shank. Component proportions and faucet-to-bowl placement are illustrative and compressed into requested planning envelope, NOT installation geometry.",
+        "Earlier source record claimed a 9.875 x 5.5 x 5.25 in assembly drawing. Saved exact-SKU PDF is a product sheet, not that drawing; prior audit rejects the drawing claim. Product page gives 5.625 x 5.625 x 5.75 in. User explicitly selects 9.875 x 5.625 x 5.75 in planning envelope; retained as explicit design, not verified assembly dimensions. This envelope is not demonstrated conservative for the physical installed bowl/faucet/drain assembly.",
+        "Only an approximate reusable layout asset. No fabrication, plumbing routing, counter cutout, fasteners, service clearances or delivered-configuration certification."
+      ]
+    },
+    {
+      "slug": "american-tables-seating-qas-36-blk",
+      "assetId": "rmb-eq-american-tables-seating-qas-36-blk",
+      "name": "American Tables & Seating QAS-36-BLK",
+      "productName": "Plain black single-back/end booth · Model QAS-36-BLK · Asset v008",
+      "manufacturer": "American Tables & Seating",
+      "model": "QAS-36-BLK",
+      "resellerSku": "132qas36bk",
+      "assetRevision": "v008",
+      "envelope": {
+        "width": 46,
+        "depth": 24,
+        "height": 36,
+        "unit": "in"
+      },
+      "dimensionLabel": "46 × 24 × 36 in (W × D × H) — Approximate planning envelope",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 35,
+      "sourceRow": "18068860013",
+      "quantity": 7,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "One approximate black single-back/end booth; one seating side only. User-selected 46 × 24 × 36 in envelope resolves conflicting source dimensions for planning only. No opposing seat, return, table or multi-booth assembly; delivered configuration and fabrication are unverified.",
+      "asset": "equipment-assets/american-tables-seating-qas-36-blk/f11bc519a3ce.glb",
+      "thumbnail": "equipment-assets/american-tables-seating-qas-36-blk/preview-92ae7531611a.png",
+      "sizeBytes": 44840,
+      "sha256": "f11bc519a3ce3793d38ba685389df31ba156260130fec02044282ed757a4e509",
+      "limitationNotes": [
+        "Restaurant-layout approximate; NOT fabrication-certified. One plain black single-back/end booth, one seating side only, upholstered end caps, crowned seat, lumbar-shaped back and recessed black plinth. No opposing seat, return wall, table, or multi-booth assembly. Secondary geometry qualitative; dimension sheet supplies 19 in nominal seat top and 5 in plinth.",
+        "Source title says 32 in height; product page and single upholstered booth dimension sheet say 36 in. Length is 45.5 in on sheet/page, 46 in in stored notes. User selects maximum per axis: 46 x 24 x 36 in. Actual delivered configuration remains unverified but is not a blocker to explicitly approximate restaurant-layout use.",
+        "Only an approximate reusable layout asset. No fabrication, plumbing routing, counter cutout, fasteners, service clearances or delivered-configuration certification."
+      ]
+    },
+    {
+      "slug": "lancaster-table-seating-max-sn496",
+      "assetId": "rmb-eq-lancaster-table-seating-max-sn496",
+      "name": "Lancaster Table & Seating MAX-SN496",
+      "productName": "13-gallon step trash can · SKU 475DWR12SS · Model MAX-SN496 · Asset v007",
+      "manufacturer": "Lancaster Table & Seating",
+      "model": "MAX-SN496",
+      "resellerSku": "475dwr12ss",
+      "assetRevision": "v007",
+      "envelope": {
+        "width": 18,
+        "depth": 16,
+        "height": 26.5,
+        "unit": "in"
+      },
+      "dimensionLabel": "18 × 16 × 26.5 in (W × D × H) — Closed lid; opening clearance excluded",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 39,
+      "sourceRow": "18068867406",
+      "quantity": 2,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "Approximate closed-lid bin; user-selected conservative 18 × 16 × 26.5 in envelope resolves conflicting page and supplier geometry. Lid-opening and user-operation clearance excluded. Secondary details are illustrative; no fabrication or installation certification.",
+      "asset": "equipment-assets/lancaster-table-seating-max-sn496/253b6fc08e80.glb",
+      "thumbnail": "equipment-assets/lancaster-table-seating-max-sn496/preview-6cf31853e47d.png",
+      "sizeBytes": 393096,
+      "sha256": "253b6fc08e8047d0bbd6bd0e594a2bad352d495729cc3621010f3e751b9d1758",
+      "limitationNotes": [
+        "Conservative closed-lid layout envelope 18 W x 16 D x 26.5 H inches. Exact page/PDF publish 18 x 16 x 18.5; prior supplier closed geometry measures 17.11646755 x 14.58830486 x 26.45207437. Per-axis maximum height rounded upward to 26.5 by user decision. Newly authored recognizable bin, not reused or rescaled supplier mesh. Lid-opening and user-operation clearance are NOT included.",
+        "All secondary dimensions, molded details, handles, mechanisms and material finish are illustrative authored proportions. No engineering, fabrication, installation, mounting-hole, load, physical-fit, operating sweep or user-access clearance certification is claimed."
+      ]
+    },
+    {
+      "slug": "alpine-industries-alp411-e",
+      "assetId": "rmb-eq-alpine-industries-alp411-e",
+      "name": "Alpine Industries ALP411-E",
+      "productName": "Baby changing station · Illustrative deployed/open pose · Model ALP411-E · Asset v004",
+      "manufacturer": "Alpine Industries",
+      "model": "ALP411-E",
+      "resellerSku": "B09RSRNYYJ",
+      "assetRevision": "v004",
+      "envelope": {
+        "width": 32.125,
+        "depth": 20.4,
+        "height": 33,
+        "unit": "in"
+      },
+      "dimensionLabel": "32.125 × 20.4 × 33 in (W × D × H) — Combined conservative deployed envelope",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 40,
+      "sourceRow": "18068860125",
+      "quantity": 2,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "Illustrative open station in a combined conservative deployed envelope, not a verified physical pose. Mounting height is not represented; Z=0 is local datum. No mounting-hole, installed clear-floor, ADA-clearance or fabrication certification.",
+      "asset": "equipment-assets/alpine-industries-alp411-e/d5b8e494c2fb.glb",
+      "thumbnail": "equipment-assets/alpine-industries-alp411-e/preview-4bf9f25b236c.png",
+      "sizeBytes": 859576,
+      "sha256": "d5b8e494c2fb1eec19aaaf0269ac59aa8c52e00d45fd05ffc4737a858a64b955",
+      "assemblyHeightLabel": "Mounting height not represented; Z=0 is local asset datum.",
+      "limitationNotes": [
+        "Conservative combined planning envelope 32.125 W x 20.4 D x 33 H inches, represented by an illustrative deployed/open station. Official table/sell sheet 31.25 W x 19 D x 33 H; official dimension image labels 32, 18 and 20.4 with conflicting/ambiguous axis association; Amazon listing 32.12 W x 19.8 D x 18.11 H. User selects 32.125 width (round-up), 20.4 depth allowance and 33 height. This is not a verified physical open pose: casing height and tray allocation are intentionally conservative authored proportions. Full occupied AABB is the combined clearance proxy; no separate hidden geometry. Rear wall datum Y=+10.2 in; bottom Z=0 is a local asset datum, NOT mounting elevation. No mounting holes or installed clear-floor/ADA clearance certification.",
+        "All secondary dimensions, molded details, handles, mechanisms and material finish are illustrative authored proportions. No engineering, fabrication, installation, mounting-hole, load, physical-fit, operating sweep or user-access clearance certification is claimed."
+      ]
+    },
+    {
+      "slug": "360-office-furniture-dsf2714e-2",
+      "assetId": "rmb-eq-360-office-furniture-dsf2714e-2",
+      "name": "360 Office Furniture DSF2714E-2",
+      "productName": "Depository safe · Closed with front hardware · Model DSF2714E-2 · Asset v005",
+      "manufacturer": "360 Office Furniture",
+      "model": "DSF2714E-2",
+      "resellerSku": "911ds272",
+      "assetRevision": "v005",
+      "envelope": {
+        "width": 14,
+        "depth": 15.2,
+        "height": 27.25,
+        "unit": "in"
+      },
+      "dimensionLabel": "14 × 15.2 × 27.25 in (W × D × H) — Closed; front hardware included",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 43,
+      "sourceRow": "18068867096",
+      "quantity": 1,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "Approximate closed safe; envelope includes front hardware and rescales supplier visualization. Door swing, mounting, internals and service clearance excluded. Not fabrication/installation certified. Normal-map shading may vary across viewers.",
+      "asset": "equipment-assets/360-office-furniture-dsf2714e-2/ab085bbec7f1.glb",
+      "thumbnail": "equipment-assets/360-office-furniture-dsf2714e-2/preview-5a053ca0a778.png",
+      "sizeBytes": 6255220,
+      "sha256": "ab085bbec7f1c183366ac40ee8ffa57e28c131b27db941b97c2d6299cca2e259",
+      "limitationNotes": [
+        "Conservative closed overall envelope 14 x 15.2 x 27.25 in INCLUDING front hardware. Exact page nominal 14 x 14 x 27.25 in does not resolve hardware projection datum. Prior supplier visualization measured 13.9931 x 15.1567 x 26.7752 in; its surface geometry is explicitly rescaled per axis to the chosen planning envelope. Top locker, drop recess/slot, keypad, handle and hinges retained. Not measured part dimensions; door swing, mounting, internals and service clearance excluded. Not a fabrication or installation certification.",
+        "Runtime derives tangent space for normal-mapped supplier materials; fine shading can vary across viewers. Dimensions and geometry are unaffected."
+      ]
+    },
+    {
+      "slug": "scotsman-ns0422w-1",
+      "assetId": "rmb-eq-scotsman-ns0422w-1",
+      "name": "Scotsman NS0422W-1",
+      "productName": "Water-cooled nugget ice machine · Head only · Model NS0422W-1 · Asset v005",
+      "manufacturer": "Scotsman",
+      "model": "NS0422W-1",
+      "resellerSku": "720ns0422w1",
+      "assetRevision": "v005",
+      "envelope": {
+        "width": 22.89,
+        "depth": 24,
+        "height": 23,
+        "unit": "in"
+      },
+      "dimensionLabel": "22.89 × 24 × 23 in (W × D × H) — Head only",
+      "dimensionHeading": "Published dimensions",
+      "sourceOrder": 51,
+      "sourceRow": "18068867020",
+      "quantity": 1,
+      "approvalStatus": "Approximate Layout Asset",
+      "fidelityNote": "Conservative ice-machine HEAD ONLY envelope; source revision unresolved. Bin, adapter, utilities and service clearances excluded. Z=0 is head base, not installed floor height. Trim/controls are illustrative; no fit, fabrication, installation or assembly certification.",
+      "asset": "equipment-assets/scotsman-ns0422w-1/6a9d43fef1cf.glb",
+      "thumbnail": "equipment-assets/scotsman-ns0422w-1/preview-78fd4e0ade7c.png",
+      "sizeBytes": 338972,
+      "sha256": "6a9d43fef1cfb178067517ec395a8013e973c838720e2c790539f1e77e82dbe3",
+      "assemblyHeightLabel": "Head base only; installed floor height, bin and adapter excluded.",
+      "limitationNotes": [
+        "Conservative machine HEAD ONLY envelope 22.89 x 24 x 23 in. Exact product page nominal width 22 in, newer N0422 family sheet upper span 22.70 in, older family manual upper span 22.89 in; selected largest per-axis envelope, revision unresolved. Plain water-cooled front; trim and controls are illustrative. Bin, adapter, utilities and service clearances EXCLUDED because no exact selected bin is in scope. Z=0 is head base, NOT installed floor height. No fit, fabrication, installation or assembly certification."
+      ]
     }
   ]
 }

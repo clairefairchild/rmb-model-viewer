@@ -52,6 +52,9 @@ try{
    $('equipment-envelope').textContent=currentEquipment.dimensionLabel||`${currentEquipment.envelope.width} × ${currentEquipment.envelope.depth} × ${currentEquipment.envelope.height} ${currentEquipment.envelope.unit} (W × D × H)`;
    $('equipment-assembly-height').textContent=currentEquipment.assemblyHeightLabel||'';$('equipment-assembly-row').hidden=!currentEquipment.assemblyHeightLabel;
    $('equipment-source').textContent=currentEquipment.sourceRow;$('equipment-quantity').textContent=String(currentEquipment.quantity);$('equipment-fidelity').textContent=currentEquipment.fidelityNote;
+   const limitationNotes=currentEquipment.limitationNotes||[];
+   $('equipment-limitations').hidden=!limitationNotes.length;
+   $('equipment-limitation-notes').replaceChildren(...limitationNotes.map(note=>{const p=document.createElement('p');p.textContent=note;return p;}));
    $('equipment-note-heading').textContent=currentEquipment.visualizationOnly?'Visualization scope':'Fidelity note';
    $('disclaimer').textContent=currentEquipment.visualizationOnly?'Certified dimensions apply to the body only · Displayed hardware is visualization-only.':'Review asset · Approval required before operational use.';$('help').textContent='Drag to orbit · Right-drag / two fingers to pan · Scroll / pinch to zoom';
    document.title=currentEquipment.name+' | Equipment Review';
