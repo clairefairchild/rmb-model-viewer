@@ -22,6 +22,17 @@
       "sha256": "294d57381532eb8e33a80f82a51ed7e2869a3022b02a859150d15f6e8d484104",
       "disclaimer": "SketchUp-derived authored design \u00b7 Embedded inches preserved; dimensions measured from model geometry, not verified as-built. Finishes and inspection lighting are visualization approximations. Both source layouts retained.",
       "thumbnail": "models/ronis-renovation-001-sketchup/preview-61a76d0c76d6.png"
+    },
+    {
+      "slug": "roll-em-up-la-vista-floorplan-v001",
+      "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
+      "revision": "Measured floorplan v001 \u00b7 September 2026",
+      "description": "Measured walls, openings, 36-inch counter pony wall, walk-in cooler, restroom, sinks, and reused booth assemblies. Explore the complete full-height model; use Bird\u2019s-eye for the plan.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/3fb7c52e1def.glb",
+      "sizeBytes": 271440,
+      "sha256": "3fb7c52e1def4b49127b615100da7b4e858cf3b44b4e35afc1bec46b98351efe",
+      "disclaimer": "Measured from verified permit-plan scale \u00b7 Visualization only, not construction documents or verified as-built. Restroom fixture heights/shapes are approved approximations; booth widths are approved 46-to-48-inch adaptations.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-56657aa18bbd.png"
     }
   ]
 }
