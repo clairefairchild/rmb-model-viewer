@@ -1340,6 +1340,30 @@
       "sizeBytes": 29164,
       "sha256": "a2362925f68de6aeb1d0f73b8415eb2f18de2bc87385726a5d8caa8cb998d427",
       "sourceRow": "ASIN B07S7CQFGF"
+    },
+    {
+      "slug": "regency-wt-123638-s-with-600dwkbf12",
+      "assetId": "rmb-eq-regency-wt-123638-s-with-600dwkbf12",
+      "name": "Regency WT-123638-S with600DWKBF12",
+      "productName": "12in worker-edge filler table with centered dip-well assembly \u00b7 Composite v004",
+      "manufacturer": "Regency Tables & Sinks / Regency Plumbing & Hardware",
+      "model": "WT-123638-S +600DWKBF12",
+      "assetRevision": "v004",
+      "envelope": {
+        "width": 12,
+        "depth": 36,
+        "height": 38,
+        "unit": "in"
+      },
+      "dimensionLabel": "12 \u00d736 \u00d738in \u00b7 source table envelope; fitted opening visualization-only",
+      "dimensionHeading": "Native table dimensions",
+      "quantity": 1,
+      "approvalStatus": "Approximate Layout Composite",
+      "fidelityNote": "Exact reusable table and unchanged bowl/faucet source assembly. Worker edge is12in wide, depth36in; bowl centered laterally. Circular rim tangent exactly6.000in inward. Fitted5.48625in bowl opening and0.56in faucet-shank opening are APPROXIMATE / VISUALIZATION ONLY, not published installation dimensions.5.625in source rim remains supported; hardware and source files unchanged. Not fabrication or plumbing certification.",
+      "asset": "equipment-assets/regency-wt-123638-s-with-600dwkbf12/ba450c293ae3.glb",
+      "thumbnail": "equipment-assets/regency-wt-123638-s-with-600dwkbf12/preview-e6320842c6ec.png",
+      "sizeBytes": 6576108,
+      "sha256": "ba450c293ae308258297f8535e712d83cc258cc13288b095ae1e72c50c277694"
     }
   ]
 }

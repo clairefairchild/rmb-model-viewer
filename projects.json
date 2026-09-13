@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Production v006 \u00b7 tables and equipment \u00b7 September 2026",
-      "description": "Measured La Vista layout with four beech booth tables, black booths, native-size kitchen equipment, five burners and wall accessories.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/64a9de717671.glb",
-      "sizeBytes": 77378112,
-      "sha256": "64a9de717671731cdc296db675af49ecb7dbc8d9bbae5c03819203f1b92dc307",
-      "disclaimer": "Measured planning visualization, not construction documents. Hook fine profile is approximate; its installed bearing point is exactly 24 inches above cooking surfaces. Source equipment limitations retained.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-173592d6a175.png"
+      "revision": "Production v008 \u00b7 complete equipment revision \u00b7 September 2026",
+      "description": "La Vista layout with east\u2013west dining tables, fitted Regency dip-well composite, two burner-aligned hooks, relocated timer, four Steelton shelves, Regency sinks and basic canopy hood.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/b4f54d9e9474.glb",
+      "sizeBytes": 94769024,
+      "sha256": "b4f54d9e947490efda800be597605615b40c8d47090388ddff57bce6eecb0c58",
+      "disclaimer": "Planning visualization, not construction documents. Fitted dip-well opening and hood elevation are approximate visualization-only. Bowl tangent setback is exactly6in; hook bearing rise exactly24in. Source equipment limitations retained.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-202f1dfebcd6.png"
     }
   ]
 }
