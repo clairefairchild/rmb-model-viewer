@@ -1460,6 +1460,30 @@
       "thumbnail": "equipment-assets/portrait-kiosk-22-granite-edge-clamp/preview-21b08a1112b1.png",
       "sha256": "81da4f1a4c011d33b9c32d4eb9e981d0c3221fe2eedc3fdd2b64fdcb9cf4b4be",
       "sizeBytes": 14436
+    },
+    {
+      "slug": "custom-regency-derived-worktable-36x24",
+      "name": "Custom Regency-derived 36 \u00d7 24-inch worktable",
+      "productName": "Custom Regency-derived 36 \u00d7 24-inch worktable \u00b7 v001",
+      "manufacturer": "Custom design derived from Regency visualization",
+      "model": "Custom 36x24 \u2014 not an official manufacturer SKU",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 36,
+        "depth": 24,
+        "height": 34,
+        "unit": "in"
+      },
+      "dimensionLabel": "36 \u00d7 24 \u00d7 34 in \u00b7 custom variant",
+      "dimensionHeading": "Explicit custom design dimensions",
+      "sourceRow": "Frank-requested La Vista v015 revision",
+      "quantity": 1,
+      "approvalStatus": "Custom Dimensioned Visualization",
+      "fidelityNote": "Custom 36 \u00d7 24 \u00d7 34-inch derivative of the placed WT-302434 visualization; not an official Regency SKU. Central span extended 6 inches. Stainless top, galvanized legs/shelf, feet, gauge, height and -X working orientation retained. Inherited undercarriage approximation; not fabrication certified.",
+      "asset": "equipment-assets/custom-regency-derived-worktable-36x24/d9edc817a29b.glb",
+      "thumbnail": "equipment-assets/custom-regency-derived-worktable-36x24/preview-ede3bf0e6514.png",
+      "sha256": "d9edc817a29b05f323d4ad6c61d533b1cc3df659b921c4f1d7877d8306d1ae6d",
+      "sizeBytes": 7211480
     }
   ]
 }
