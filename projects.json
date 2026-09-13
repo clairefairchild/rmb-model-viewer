@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Equipment lineup v004 \u00b7 September 2026",
-      "description": "Employee-side equipment lineup in native sizes, alongside a 34-inch custom stainless worktop and preserved 36-inch pony wall. Use Bird\u2019s-eye, orbit, or walkthrough to inspect the layout.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/5b1a5cab2d99.glb",
-      "sizeBytes": 17477292,
-      "sha256": "5b1a5cab2d99d5cc210428a1675c6e6dcda740c359d6551249e3168d0054409a",
-      "disclaimer": "Measured plan + explicit layout design \u00b7 Not construction or installation certification. Source equipment visualization limitations retained; Lincoln is an approximate layout asset and WT-302434 is not exact-product certified. Existing approved restroom and booth approximations unchanged.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-9a6112329e9f.png"
+      "revision": "Production v006 \u00b7 tables and equipment \u00b7 September 2026",
+      "description": "Measured La Vista layout with four beech booth tables, black booths, native-size kitchen equipment, five burners and wall accessories.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/64a9de717671.glb",
+      "sizeBytes": 77378112,
+      "sha256": "64a9de717671731cdc296db675af49ecb7dbc8d9bbae5c03819203f1b92dc307",
+      "disclaimer": "Measured planning visualization, not construction documents. Hook fine profile is approximate; its installed bearing point is exactly 24 inches above cooking surfaces. Source equipment limitations retained.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-173592d6a175.png"
     }
   ]
 }
