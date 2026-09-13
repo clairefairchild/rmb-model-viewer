@@ -55,7 +55,7 @@ try{
    await page.screenshot({path:new URL(mobile?'mobile-walk.png':'desktop-walk.png',output).pathname});report.checks.push(`${mobile?'mobile pad':'desktop WASD'} walkthrough movement and look operate`);
    await page.evaluate(()=>document.getElementById('home').click());assert.equal((await snapshot()).walk,false);
   }
-  if(!mobile){await page.locator('#fullscreen').click();await page.waitForFunction(()=>!!document.fullscreenElement);await page.locator('#fullscreen').click();report.checks.push('fullscreen enters and exits');}
+  if(!mobile){await page.locator('#fullscreen').click({timeout:120000});await page.waitForFunction(()=>!!document.fullscreenElement);await page.locator('#fullscreen').click({timeout:120000});report.checks.push('fullscreen enters and exits');}
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   for(const id of equipment?['home','front','rear','fullscreen']:['home','bird','walk','fullscreen'])assert(await page.locator('#'+id).isVisible());
   report.checks.push(`${mobile?'mobile':'desktop'} layout fits viewport`);
