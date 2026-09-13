@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "live_url": "https://models.ronismacbar.com/roll-em-up-la-vista-floorplan-v001/",
+  "equipment_url": "https://models.ronismacbar.com/equipment/custom-regency-derived-worktable-36x24/",
+  "scene_checks": 13649,
+  "source_files_preserved": 1591,
+  "zero_collision_errors": true,
+  "glbs_validated": 2,
+  "khronos_errors": 0,
+  "khronos_warnings": 0,
+  "desktop_mobile_browser_errors": [],
+  "wheel_zoom_and_cartoon_blaster_verified": true,
+  "main_geometry_commit": "799ace86764d24f5353d8401e97d0d6db566a546",
+  "pages_commit": "dbb5c2d3179bb91c2354b51fa05ddfb4d5513c23",
+  "deployment_run": 34780021098,
+  "deployment_url": "https://github.com/clairefairchild/rmb-model-viewer/actions/runs/34780021098",
+  "scene_sha256": "c4866122faa33c1aade8a0acb16558b3f4a3f4af921ed85d99637e52c1013fb6",
+  "glb_sha256": "462218a7d2276ad7bc0cd9bc5f9f51a308d092271edc961aca0da8e3bf4536ca",
+  "custom_glb_sha256": "d9edc817a29b05f323d4ad6c61d533b1cc3df659b921c4f1d7877d8306d1ae6d",
+  "west_edges_inches": [
+    88.51999372947873,
+    88.51999372947873,
+    88.51999372947873
+  ],
+  "west_difference_inches": 0.0,
+  "tolerance_inches": 0.0001,
+  "register_support_margin_inches": 3.5002500101283687,
+  "prior_live_catalog_rows_retained": 55
+}

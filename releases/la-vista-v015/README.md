@@ -37,3 +37,13 @@ Custom undercarriage retains source visualization approximation, not manufacture
 
 Native:scene.blend; components/custom-regency-derived-worktable-36x24-v001/{asset.blend,asset.glb,README.md,verification/}; scripts/; renders/; verification/{build-record,scene-audit,collisions,visual-review,prior-hashes}.json.
 Web:../roll-em-up-la-vista-web-export-v015/{scene.blend,model.glb}; evidence/{khronos,roundtrip,deploy-record}.json. Previous source/projects never overwritten.
+
+## Final live completion
+
+**Complete and verified live.** Main geometry commit `799ace86764d24f5353d8401e97d0d6db566a546`; Pages deployment commit `dbb5c2d3179bb91c2354b51fa05ddfb4d5513c23`. GitHub Pages run [34780021098](https://github.com/clairefairchild/rmb-model-viewer/actions/runs/34780021098) succeeded.
+
+Desktop1440×1000 and mobile390×844 touch emulation verified v015 label,2809 loaded mesh primitives, visible requested placements, orbit/pan/pinch, measurement activation, walk movement/exit, empty-canvas wheel target stability and cursor model-hit zoom. Desktop cartoon Blender blaster loads, aims and fires. **Zero console/runtime errors.**12 live screenshots captured;8 placement/equipment/blaster views directly inspected, complementing7 final native renders. No physical handset certification claimed.
+
+Live floor GLB SHA-256 `462218a7d2276ad7bc0cd9bc5f9f51a308d092271edc961aca0da8e3bf4536ca` (102,358,192bytes); reusable GLB `d9edc817a29b05f323d4ad6c61d533b1cc3df659b921c4f1d7877d8306d1ae6d` (7,211,480bytes). Both pages/catalogs/GLBs HTTP200 and byte-identical to local release. All55 prior live equipment entries retained exactly. All1,591 prior-version file hashes verified unchanged. Viewer source and deployed JS/CSS bundles unchanged. Shared checkout remains untouched.
+
+Consolidated proof:`verification/final-report.json`; live records:`../roll-em-up-la-vista-web-export-v015/evidence/live-http.json` and`evidence/browser-live/report.json`. Editable source and component remain at the artifact paths above.
