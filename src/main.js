@@ -111,6 +111,7 @@ function onPointerDown(event){
  if(!state.ready)return;
  if(walk){if(!pointerLocked&&event.pointerType!=='mouse'){consumePointer(event);navDrag={kind:'look',id:event.pointerId,x:event.clientX,y:event.clientY};event.currentTarget.setPointerCapture(event.pointerId);}return;}
  if(measurementState.active){consumePointer(event);measureTap={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};event.currentTarget.setPointerCapture(event.pointerId);updateHoverFromEvent(event,true);return;}
+ if(event.pointerType!=='mouse')return;
  if(event.button!==0)return;consumePointer(event);const mode=effectiveDragMode(event.shiftKey);navDrag={kind:'navigate',id:event.pointerId,x:event.clientX,y:event.clientY,mode,shift:event.shiftKey};event.currentTarget.setPointerCapture(event.pointerId);document.body.dataset.dragMode=mode;
 }
 function onPointerMove(event){
