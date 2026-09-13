@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Measured floorplan v001 \u00b7 September 2026",
-      "description": "Measured walls, openings, 36-inch counter pony wall, walk-in cooler, restroom, sinks, and reused booth assemblies. Explore the complete full-height model; use Bird\u2019s-eye for the plan.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/3fb7c52e1def.glb",
-      "sizeBytes": 271440,
-      "sha256": "3fb7c52e1def4b49127b615100da7b4e858cf3b44b4e35afc1bec46b98351efe",
-      "disclaimer": "Measured from verified permit-plan scale \u00b7 Visualization only, not construction documents or verified as-built. Restroom fixture heights/shapes are approved approximations; booth widths are approved 46-to-48-inch adaptations.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-56657aa18bbd.png"
+      "revision": "Production v015 \u00b7 stainless POS and aligned front line",
+      "description": "Native 16-inch register and 14-inch POS on the existing employee-side stainless worktop; new custom 36 \u00d7 24-inch northern table with fixed pony-wall edge; steam well and cold table aligned west. Dip well, kiosks, mural, seating and all other v014 features retained.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/462218a7d227.glb",
+      "sizeBytes": 102358192,
+      "sha256": "462218a7d2276ad7bc0cd9bc5f9f51a308d092271edc961aca0da8e3bf4536ca",
+      "disclaimer": "VISUALIZATION ONLY\u2014NOT for installation/construction. Hoshizaki/Cornelius stack is NOT manufacturer-approved; Coke front overhang 0.6875 in. Custom 36 \u00d7 24 table is not an official SKU. POS/kiosk details, dip-well opening and hood elevation are illustrative. Prior source limitations retained.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-43dc1312fa22.png"
     }
   ]
 }

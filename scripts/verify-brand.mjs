@@ -135,7 +135,7 @@ assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').quantity, 2);
 assert.equal(certifiedBatch.get('regency-sw1296-3-18-v').approvalStatus, 'Certified Product Envelope');
 assert.deepEqual(certifiedBatch.get('regency-sw1296-3-18-v').envelope, {width:96, depth:12, height:11.625, unit:'in'});
 const newlyAcceptedOrders = [8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 41, 42, 46];
-assert.equal(equipment.equipment.length, 45, 'equipment catalog must retain 39 entries and add six rebuilt assets');
+assert(equipment.equipment.length >= 45, 'equipment catalog must retain the original 45 entries while allowing new custom assets');
 assert.deepEqual(equipment.equipment.slice(10,39).map(item => item.sourceOrder), newlyAcceptedOrders, 'accepted equipment batch must remain deterministic');
 assert.equal(new Set(equipment.equipment.map(item => item.sourceRow)).size, equipment.equipment.length, 'equipment source rows must be unique');
 assert.equal(new Set(equipment.equipment.map(item => item.asset)).size, equipment.equipment.length, 'equipment asset URLs must be unique');
@@ -144,9 +144,9 @@ assert.equal(fs.readdirSync(new URL('../public/', import.meta.url), {recursive:t
 
 console.log(JSON.stringify({passed:true,checks:['authoritative Roni tenant colors and radius scale','Cheddar production font weights and Roni noodle mark','RMB Suite shell identity without legacy Model Studio tokens','viewer controls, loading/error states, rendering, and disclaimer hooks','equipment schema, exact review data, content hashes, and public-source boundary']},null,2));
 
-const rebuilt=equipment.equipment.slice(39);
+const rebuilt=equipment.equipment.slice(39,45);
 assert.deepEqual(rebuilt.map(x=>x.sourceOrder),[10,35,39,40,43,51]);
-assert.equal(new Set(equipment.equipment.map(x=>x.assetId||x.sourceRow)).size,45);
+assert.equal(new Set(equipment.equipment.map(x=>x.assetId||x.sourceRow)).size,equipment.equipment.length);
 const orders=equipment.equipment.filter(x=>x.sourceOrder!==undefined).map(x=>x.sourceOrder);
 assert.equal(new Set(orders).size,orders.length);
 for(const item of rebuilt){

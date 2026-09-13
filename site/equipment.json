@@ -1215,6 +1215,30 @@
       "limitationNotes": [
         "Conservative machine HEAD ONLY envelope 22.89 x 24 x 23 in. Exact product page nominal width 22 in, newer N0422 family sheet upper span 22.70 in, older family manual upper span 22.89 in; selected largest per-axis envelope, revision unresolved. Plain water-cooled front; trim and controls are illustrative. Bin, adapter, utilities and service clearances EXCLUDED because no exact selected bin is in scope. Z=0 is head base, NOT installed floor height. No fit, fabrication, installation or assembly certification."
       ]
+    },
+    {
+      "slug": "custom-regency-derived-worktable-36x24",
+      "name": "Custom Regency-derived 36 × 24-inch worktable",
+      "productName": "Custom Regency-derived 36 × 24-inch worktable · v001",
+      "manufacturer": "Custom design derived from Regency visualization",
+      "model": "Custom 36x24 — not an official manufacturer SKU",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 36,
+        "depth": 24,
+        "height": 34,
+        "unit": "in"
+      },
+      "dimensionLabel": "36 × 24 × 34 in · custom variant",
+      "dimensionHeading": "Explicit custom design dimensions",
+      "sourceRow": "Frank-requested La Vista v015 revision",
+      "quantity": 1,
+      "approvalStatus": "Custom Dimensioned Visualization",
+      "fidelityNote": "Custom 36 × 24 × 34-inch derivative of the placed WT-302434 visualization; not an official Regency SKU. Central span extended 6 inches. Stainless top, galvanized legs/shelf, feet, gauge, height and -X working orientation retained. Inherited undercarriage approximation; not fabrication certified.",
+      "asset": "equipment-assets/custom-regency-derived-worktable-36x24/d9edc817a29b.glb",
+      "thumbnail": "equipment-assets/custom-regency-derived-worktable-36x24/preview-ede3bf0e6514.png",
+      "sha256": "d9edc817a29b05f323d4ad6c61d533b1cc3df659b921c4f1d7877d8306d1ae6d",
+      "sizeBytes": 7211480
     }
   ]
 }
