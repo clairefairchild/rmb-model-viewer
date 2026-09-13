@@ -30,7 +30,7 @@ assert.match(css, /ronis\.rmbsuite\.com\/api\/fonts\/601448c6-d494-4372-ab00-e82
 assert.match(html, /ronis\.rmbsuite\.com\/ronis-noodle-map-marker\.png/);
 assert.doesNotMatch(html + css + js, /Model Studio|#183d35|Georgia,serif/i);
 
-for (const id of ['canvas', 'home', 'front', 'rear', 'bird', 'walk', 'fullscreen', 'orbit-mode', 'pan-mode', 'zoom-in', 'zoom-out', 'walk-pad', 'loading', 'error', 'disclaimer', 'equipment-library', 'equipment-grid', 'equipment-details', 'library-footer', 'footer-context']) {
+for (const id of ['canvas', 'home', 'front', 'rear', 'bird', 'measure', 'walk', 'fullscreen', 'orbit-mode', 'pan-mode', 'zoom-in', 'zoom-out', 'walk-pad', 'walk-entry', 'measure-live-label', 'measurement-labels', 'shooter-hud', 'loading', 'error', 'disclaimer', 'equipment-library', 'equipment-grid', 'equipment-details', 'library-footer', 'footer-context']) {
   assert.match(html, new RegExp(`id="${id}"`), `required viewer element #${id} must remain present`);
 }
 for (const behavior of ['OrbitControls', 'setWalk', 'requestFullscreen', 'webglcontextlost', 'GLTFLoader', 'DRACOLoader', 'setDRACOLoader']) {

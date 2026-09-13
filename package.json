@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build && python3 scripts/publish.py --routes-only",
-    "test": "node scripts/verify-brand.mjs",
+    "test:browser": "node scripts/verify-interactions.mjs",
+    "test": "node scripts/verify-brand.mjs && node scripts/verify-viewer-core.mjs",
     "check": "npm test && npm run build",
     "validate": "node scripts/validate-glb.mjs",
     "publish:model": "python3 scripts/publish.py"

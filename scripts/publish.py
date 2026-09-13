@@ -12,8 +12,8 @@ def atomic(p,data):
  p.parent.mkdir(parents=True,exist_ok=True)
  with tempfile.NamedTemporaryFile(mode='w',dir=p.parent,delete=False) as f:f.write(data);tmp=f.name
  os.replace(tmp,p)
-def routes():
- site=ROOT/'site';html=(site/'index.html').read_text()
+def routes(site=None):
+ site=site or ROOT/'site';html=(site/'index.html').read_text()
  manifest=json.loads((site/'projects.json').read_text())
  for project in manifest['projects']:
   target=site/project['slug']/'index.html';atomic(target,html.replace('./assets/','../assets/'))
@@ -55,7 +55,19 @@ def verify_deployment():
   except Exception as error:
    last_error=type(error).__name__+': '+str(error);time.sleep(5)
  raise RuntimeError('Upload finished, but live verification is pending: '+last_error)
-def deploy():
+def verify_viewer_deployment(expected):
+ deadline=time.time()+300
+ while time.time()<deadline:
+  try:
+   for route,body in expected.items():
+    separator='&' if '?' in route else '?'
+    with urllib.request.urlopen(URL+route+separator+'publication='+str(time.time_ns()),timeout=30) as response:
+     if response.status!=200 or response.read()!=body:raise RuntimeError('Previous viewer route is still live: '+route)
+   print('LIVE_VIEWER_DEPLOYMENT_VERIFIED');return
+  except Exception as error:
+   last_error=type(error).__name__+': '+str(error);time.sleep(5)
+ raise RuntimeError('Viewer upload finished, but live verification is pending: '+last_error)
+def deploy(viewer_only=False):
  routes()
  with tempfile.TemporaryDirectory(prefix='rmb-model-deploy-') as folder:
   target=Path(folder)
@@ -64,18 +76,34 @@ def deploy():
   else:
    run(['git','init','-b','gh-pages',target]);run(['git','-C',target,'remote','add','origin',REPO])
   # Preserve historical hashed models/bundles so previously open tabs keep working.
-  shutil.copytree(ROOT/'site',target,dirs_exist_ok=True)
+  if viewer_only:
+   # A viewer-only release must never replace a newer live catalog/model prepared by
+   # another worker. Overlay just the compiled bundle and regenerate every live route
+   # from the manifests already on gh-pages.
+   shutil.copytree(ROOT/'site'/'assets',target/'assets',dirs_exist_ok=True)
+   shutil.copy2(ROOT/'site'/'index.html',target/'index.html')
+   routes(target)
+  else:shutil.copytree(ROOT/'site',target,dirs_exist_ok=True)
   run(['git','-C',target,'add','--all'])
   changed=subprocess.run(['git','-C',target,'diff','--cached','--quiet']).returncode!=0
   if changed:
    run(['git','-C',target,'-c','user.name=Roni’s Model Studio','-c','user.email=clairefairchild@users.noreply.github.com','commit','-m','Publish model catalog and static viewer'])
    run(['git','-C',target,'push','origin','gh-pages'])
- verify_deployment()
+  if viewer_only:
+   expected={'/':(target/'index.html').read_bytes(),'/404.html':(target/'404.html').read_bytes()}
+   projects=json.loads((target/'projects.json').read_text())['projects']
+   expected.update({f'/{item["slug"]}/':(target/item['slug']/'index.html').read_bytes() for item in projects})
+   if (target/'equipment.json').exists():
+    equipment=json.loads((target/'equipment.json').read_text())['equipment'];expected['/equipment/']=(target/'equipment'/'index.html').read_bytes();expected.update({f'/equipment/{item["slug"]}/':(target/'equipment'/item['slug']/'index.html').read_bytes() for item in equipment})
+   assets=sorted((ROOT/'site'/'assets').glob('index-*'));expected.update({f'/assets/{asset.name}':asset.read_bytes() for asset in assets})
+   verify_viewer_deployment(expected)
+  else:verify_deployment()
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('scene',nargs='?',help='.blend file or project directory containing scene.blend');p.add_argument('--slug');p.add_argument('--title');p.add_argument('--revision',default='Design model');p.add_argument('--description',default='An interactive first look at this space.');p.add_argument('--thumbnail',type=Path);p.add_argument('--replace',action='store_true');p.add_argument('--deploy',action='store_true');p.add_argument('--deploy-only',action='store_true');p.add_argument('--routes-only',action='store_true');args=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('scene',nargs='?',help='.blend file or project directory containing scene.blend');p.add_argument('--slug');p.add_argument('--title');p.add_argument('--revision',default='Design model');p.add_argument('--description',default='An interactive first look at this space.');p.add_argument('--thumbnail',type=Path);p.add_argument('--replace',action='store_true');p.add_argument('--deploy',action='store_true');p.add_argument('--deploy-only',action='store_true');p.add_argument('--deploy-viewer',action='store_true');p.add_argument('--routes-only',action='store_true');args=p.parse_args()
  with open(ROOT/'.publish.lock','w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
   if args.routes_only:routes();print('STATIC_ROUTES_GENERATED');raise SystemExit(0)
+  if args.deploy_viewer:deploy(viewer_only=True);print(URL);raise SystemExit(0)
   if args.deploy_only:deploy();print(URL);raise SystemExit(0)
   if not args.scene or not args.slug or not args.title:p.error('scene, --slug, and --title are required')
   if not re.fullmatch('[a-z0-9]+(?:-[a-z0-9]+)*',args.slug) or args.slug in {'assets','models','index','projects'}:p.error('Use a safe lowercase hyphenated project slug')
