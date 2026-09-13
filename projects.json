@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Production v011 \u00b7 beverage and customer finishes \u00b7 September 2026",
+      "revision": "Production v012 \u00b7 complete A\u2013H revision \u00b7 corrected finish color",
       "description": "Complete A\u2013H revision: stainless sink correction, centered wire racks, west-facing Coke and twin tea dispensers, granite-capped tiled pony wall and straight glass, customer-only graphite wainscot and Roni\u2019s yellow trim.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/c64a9afdf567.glb",
-      "sizeBytes": 99748248,
-      "sha256": "c64a9afdf56777a9dc6dd4f8bc2f458630deefbf774cc047f5c8147dfbe7bf38",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/d8c61064e930.glb",
+      "sizeBytes": 99775156,
+      "sha256": "d8c61064e930d3c221d20b7803c36c6d569afac1ac0cf199ee2d8057a770593a",
       "disclaimer": "VISUALIZATION ONLY: Hoshizaki F-1002MAJ on Cornelius IDC255 is not manufacturer-approved and is NOT suitable for installation/construction. Native equipment and approved 11/16-inch west/front overhang shown only for spatial review. Prior fitted dip-well opening and hood elevation remain approximate; source equipment limitations retained.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-daaff6c5cd9f.png"
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-4614f6992261.png"
     }
   ]
 }
