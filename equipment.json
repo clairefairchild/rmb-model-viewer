@@ -143,11 +143,11 @@
     {
       "slug": "regency-s3c141612-12l-r",
       "name": "Regency Tables & Sinks S3C141612-12L&R",
-      "productName": "Three-compartment sink with two drainboards \u00b7 Model S3C141612-12L&R \u00b7 SKU 600S3141612G \u00b7 Asset v002",
+      "productName": "Three-compartment sink with two drainboards \u00b7 Model S3C141612-12L&R \u00b7 SKU 600S3141612G \u00b7 Asset v003",
       "manufacturer": "Regency Tables & Sinks",
       "model": "S3C141612-12L&R",
       "resellerSku": "600S3141612G",
-      "assetRevision": "v002",
+      "assetRevision": "v003",
       "envelope": {
         "width": 70,
         "depth": 21.5,
@@ -160,11 +160,11 @@
       "sourceRow": "18068859723",
       "quantity": 1,
       "approvalStatus": "Verified Product Envelope",
-      "fidelityNote": "Envelope, bowl openings/depth, drainboard spans, faucet centers/holes and leg spacing are dimension-driven. Undocumented radii, taper, folds, socket/foot and strainer details are approximate; no faucet or hidden plumbing. GLB omits procedural bump.",
-      "asset": "equipment-assets/regency-s3c141612-12l-r/6e542ed291da.glb",
-      "thumbnail": "equipment-assets/regency-s3c141612-12l-r/preview-98a7fd0a0869.png",
-      "sizeBytes": 867452,
-      "sha256": "6e542ed291da2caaccc9ab803c3ee42087f903624505609c0e8001bcd8d0bd37"
+      "fidelityNote": "Envelope, bowl openings/depth, drainboard spans, faucet centers/holes and leg spacing are dimension-driven. Undocumented radii, taper, folds, socket/foot and strainer details are approximate; no faucet or hidden plumbing. GLB omits procedural bump. v003: isotropic stainless avoids unsupported anisotropic tangent-basis artifacts; native geometry, normals, metallic and roughness unchanged. Previous sealed package retained.",
+      "asset": "equipment-assets/regency-s3c141612-12l-r/28b62dcde127.glb",
+      "thumbnail": "equipment-assets/regency-s3c141612-12l-r/preview-125ac39211e6.png",
+      "sizeBytes": 1072960,
+      "sha256": "28b62dcde127599a9ba570ef8d6b00e7b3b9677e9b187453ca4cab5879faac31"
     },
     {
       "slug": "ts-brass-5pr-8w12-c",
@@ -1364,6 +1364,54 @@
       "thumbnail": "equipment-assets/regency-wt-123638-s-with-600dwkbf12/preview-e6320842c6ec.png",
       "sizeBytes": 6576108,
       "sha256": "ba450c293ae308258297f8535e712d83cc258cc13288b095ae1e72c50c277694"
+    },
+    {
+      "slug": "cornelius-idc255-coca-cola-eight-valve",
+      "name": "Cornelius IDC255 \u00b7 Coca-Cola eight-valve fountain",
+      "productName": "Cornelius IDC255 \u00b7 Coca-Cola eight-valve fountain \u00b7 Asset v001",
+      "manufacturer": "Cornelius",
+      "model": "IDC255",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 30,
+        "depth": 30.6875,
+        "height": 39.75,
+        "unit": "in"
+      },
+      "dimensionLabel": "30 \u00d7 30.6875 \u00d7 39.75 in \u2014 official overall envelope",
+      "dimensionHeading": "Manufacturer dimensions",
+      "sourceRow": "Permit FS1 schedule item 1.1; Cornelius installation manual COR1141, printed p3",
+      "quantity": 1,
+      "approvalStatus": "Dimensioned Visualization",
+      "fidelityNote": "Official Cornelius overall envelope preserved at native size; eight-valve Coca-Cola self-service visualization. Secondary valve, trim and branding forms are illustrative, not manufacturer CAD or fabrication detail. Ice-head assembly in La Vista is explicitly visualization-only and NOT manufacturer-approved; not suitable for installation/construction.",
+      "asset": "equipment-assets/cornelius-idc255-coca-cola-eight-valve/71adfc814c9b.glb",
+      "thumbnail": "equipment-assets/cornelius-idc255-coca-cola-eight-valve/preview-670530688481.png",
+      "sha256": "71adfc814c9bd7ce89b69aa90337edc2db47fcad7287cf340a1e2922ab19391b",
+      "sizeBytes": 3574840
+    },
+    {
+      "slug": "bunn-tdo-n-3-5-39600-0047",
+      "name": "BUNN TDO-N-3.5 \u00b7 narrow iced tea dispenser",
+      "productName": "BUNN TDO-N-3.5 \u00b7 narrow iced tea dispenser \u00b7 Asset v001",
+      "manufacturer": "BUNN",
+      "model": "39600.0047",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 6.2,
+        "depth": 18.7,
+        "height": 21.8,
+        "unit": "in"
+      },
+      "dimensionLabel": "6.2 \u00d7 18.7 \u00d7 21.8 in \u2014 official overall envelope",
+      "dimensionHeading": "Manufacturer dimensions",
+      "sourceRow": "Official BUNN 39600.0047 specification sheet, 08/31/2026",
+      "quantity": 2,
+      "approvalStatus": "Dimensioned Visualization",
+      "fidelityNote": "Official BUNN dimensions take precedence over conflicting retailer figures. 3.5-gallon narrow stainless dispenser with pinch-tube faucet and 7-inch cup clearance. Secondary radii, lid and faucet forms are illustrative; not OEM CAD or fabrication detail. Reusable single unit; two native-size instances in La Vista.",
+      "asset": "equipment-assets/bunn-tdo-n-3-5-39600-0047/173e124a1642.glb",
+      "thumbnail": "equipment-assets/bunn-tdo-n-3-5-39600-0047/preview-ff5c8f13d91f.png",
+      "sha256": "173e124a16425deef2ced5e199e8046b2921234ddd31fb335f96ec204299b9aa",
+      "sizeBytes": 383512
     }
   ]
 }

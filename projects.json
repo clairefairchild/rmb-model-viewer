@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Production v008 \u00b7 complete equipment revision \u00b7 September 2026",
-      "description": "La Vista layout with east\u2013west dining tables, fitted Regency dip-well composite, two burner-aligned hooks, relocated timer, four Steelton shelves, Regency sinks and basic canopy hood.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/b4f54d9e9474.glb",
-      "sizeBytes": 94769024,
-      "sha256": "b4f54d9e947490efda800be597605615b40c8d47090388ddff57bce6eecb0c58",
-      "disclaimer": "Planning visualization, not construction documents. Fitted dip-well opening and hood elevation are approximate visualization-only. Bowl tangent setback is exactly6in; hook bearing rise exactly24in. Source equipment limitations retained.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-202f1dfebcd6.png"
+      "revision": "Production v011 \u00b7 beverage and customer finishes \u00b7 September 2026",
+      "description": "Complete A\u2013H revision: stainless sink correction, centered wire racks, west-facing Coke and twin tea dispensers, granite-capped tiled pony wall and straight glass, customer-only graphite wainscot and Roni\u2019s yellow trim.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/c64a9afdf567.glb",
+      "sizeBytes": 99748248,
+      "sha256": "c64a9afdf56777a9dc6dd4f8bc2f458630deefbf774cc047f5c8147dfbe7bf38",
+      "disclaimer": "VISUALIZATION ONLY: Hoshizaki F-1002MAJ on Cornelius IDC255 is not manufacturer-approved and is NOT suitable for installation/construction. Native equipment and approved 11/16-inch west/front overhang shown only for spatial review. Prior fitted dip-well opening and hood elevation remain approximate; source equipment limitations retained.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-daaff6c5cd9f.png"
     }
   ]
 }
