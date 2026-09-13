@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {
   METERS_TO_INCHES,metersToInches,formatInches,closestPointOnSegment2D,chooseSnapCandidate,
-  initialMeasurementState,reduceMeasurement,initialShooterState,reduceShooter,
+  initialMeasurementState,measurementMarkerState,normalizeSnapKind,reduceMeasurement,screenMarkerWorldSize,snapMarkerAppearance,initialShooterState,reduceShooter,
   normalizeWheelDelta,calculateWheelZoom,MAX_WHEEL_DELTA_PIXELS,
 } from '../src/viewer-core.js';
 
@@ -18,12 +18,21 @@ assert.equal(chooseSnapCandidate({x:5,y:2},[vertex],[edge]).kind,'vertex','hard 
 const edgeSnap=chooseSnapCandidate({x:10,y:6},[],[edge]);
 assert.equal(edgeSnap.kind,'edge');assert.equal(edgeSnap.t,.5);
 assert.equal(chooseSnapCandidate({x:10,y:20},[],[edge]),null,'surface fallback is used outside snap tolerance');
+assert.equal(normalizeSnapKind('vertex'),'vertex');assert.equal(normalizeSnapKind('edge'),'edge');assert.equal(normalizeSnapKind('surface'),'surface');assert.equal(normalizeSnapKind('unknown'),'surface');
+assert.deepEqual(['vertex','edge','surface'].map(kind=>snapMarkerAppearance(kind).kind),['vertex','edge','surface'],'corner, edge, and surface markers have deterministic appearances');
+assert(snapMarkerAppearance('vertex').hoverPixels>snapMarkerAppearance('vertex').endpointPixels,'hover marker is prominent while endpoints remain compact');
+for(const depth of [1,8,100]){const pixels=28,viewportHeight=900,fovDegrees=45,worldSize=screenMarkerWorldSize({depth,fovDegrees,viewportHeight,pixels}),projectedPixels=worldSize/(2*depth*Math.tan(fovDegrees*Math.PI/360))*viewportHeight;assert(Math.abs(projectedPixels-pixels)<1e-10,'perspective marker remains constant in screen pixels across zoom/depth');}
+assert.equal(screenMarkerWorldSize({depth:1,fovDegrees:45,viewportHeight:0,pixels:28}),null);
 
 let measure=initialMeasurementState();
 measure=reduceMeasurement(measure,{type:'ENTER'});assert.equal(measure.active,true);
-measure=reduceMeasurement(measure,{type:'PLACE',point:[0,0,0],id:'m1'});assert.deepEqual(measure.draft,[0,0,0]);
-measure=reduceMeasurement(measure,{type:'PLACE',point:[1,0,0],id:'m1'});assert.equal(measure.measurements.length,1);assert.equal(measure.selectedId,'m1');assert.equal(measure.draft,null);
-measure=reduceMeasurement(measure,{type:'DELETE_SELECTED'});assert.equal(measure.measurements.length,0);assert.equal(measure.selectedId,null);
+let markers=measurementMarkerState(measure,'vertex');assert.deepEqual(markers.hover,{role:'hover',kind:'vertex'});assert.equal(markers.draft,null);assert.deepEqual(markers.saved,[],'pre-click hover has exactly one transient marker');
+measure=reduceMeasurement(measure,{type:'PLACE',point:[0,0,0],kind:'vertex',id:'m1'});assert.deepEqual(measure.draft,[0,0,0]);assert.equal(measure.draftKind,'vertex');
+markers=measurementMarkerState(measure,'edge');assert.deepEqual(markers.draft,{role:'endpoint-a',kind:'vertex'});assert.deepEqual(markers.hover,{role:'hover',kind:'edge'},'locked A remains while B follows the current candidate');
+measure=reduceMeasurement(measure,{type:'PLACE',point:[1,0,0],kind:'edge',id:'m1'});assert.equal(measure.measurements.length,1);assert.equal(measure.selectedId,'m1');assert.equal(measure.draft,null);
+markers=measurementMarkerState(measure,'surface');assert.equal(markers.saved.length,2);assert.deepEqual(markers.saved.map(marker=>marker.kind),['vertex','edge'],'completed measurements retain both endpoint snap states');
+measure=reduceMeasurement(measure,{type:'EXIT'});markers=measurementMarkerState(measure,'edge');assert.equal(markers.hover,null);assert.equal(markers.draft,null);assert.equal(markers.saved.length,2,'mode exit keeps completed endpoint markers for the session');
+measure=reduceMeasurement(measure,{type:'ENTER'});measure=reduceMeasurement(measure,{type:'SELECT',id:'m1'});measure=reduceMeasurement(measure,{type:'DELETE_SELECTED'});assert.equal(measure.measurements.length,0);assert.equal(measure.selectedId,null);assert.deepEqual(measurementMarkerState(measure,'surface').saved,[],'Delete removes both endpoint markers with the measurement');
 measure=reduceMeasurement(measure,{type:'PLACE',point:[0,0,0],id:'m2'});measure=reduceMeasurement(measure,{type:'CANCEL'});assert.equal(measure.draft,null);
 measure=reduceMeasurement(measure,{type:'EXIT'});assert.equal(measure.active,false);
 measure=reduceMeasurement(measure,{type:'RESET'});assert.deepEqual(measure,initialMeasurementState(),'reload/reset semantics clear every in-memory measurement');
@@ -61,4 +70,4 @@ let saturated=calculateWheelZoom({...zoomBase,hasModelHit:false,deltaY:-1e9,delt
 const boundedZoom=calculateWheelZoom({...zoomBase,target:[4,1,-7],focus:[8,4,0],hasModelHit:true,deltaY:1e9,deltaMode:2,envelopeExpansion:0});assert(boundedZoom.targetWasClamped);assert(boundedZoom.target.every((value,index)=>value>=zoomBase.bounds.min[index]&&value<=zoomBase.bounds.max[index]),'target is clamped to the allowed scene envelope');assert(Math.abs(Math.hypot(...boundedZoom.position.map((value,index)=>value-boundedZoom.target[index]))-boundedZoom.distanceAfter)<1e-8,'envelope correction preserves camera-target offset');
 for(const invalid of [{position:[NaN,0,0]},{target:[0,0,Infinity]},{focus:[0,NaN,0],hasModelHit:true},{minDistance:0},{maxDistance:0},{deltaY:NaN}])assert.equal(calculateWheelZoom({...zoomBase,hasModelHit:false,deltaY:1,...invalid}),null,'invalid math is rejected without a candidate state');
 
-console.log(JSON.stringify({passed:true,checks:['exact meter-to-inch conversion','vertex/edge/surface snap precedence','measurement first/second click, selection/delete, cancel, reload reset','shooter state, caps, and cleanup lifecycle','wheel delta mode normalization and event cap','four-corner 100-event empty-canvas stability','model-hit cursor focus','distance saturation and target envelope','invalid wheel math leaves state untouched']},null,2));
+console.log(JSON.stringify({passed:true,checks:['exact meter-to-inch conversion','vertex/edge/surface snap precedence and marker appearance','hover marker and locked A/live B lifecycle','completed endpoint marker persistence and selection/Delete cleanup','measurement cancel and reload reset','shooter state, caps, and cleanup lifecycle','wheel delta mode normalization and event cap','four-corner 100-event empty-canvas stability','model-hit cursor focus','distance saturation and target envelope','invalid wheel math leaves state untouched']},null,2));

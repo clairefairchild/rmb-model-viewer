@@ -13,23 +13,57 @@ export function formatInches(meters) {
 }
 
 export function initialMeasurementState() {
-  return {active:false, draft:null, selectedId:null, measurements:[]};
+  return {active:false, draft:null, draftKind:null, selectedId:null, measurements:[]};
+}
+
+const SNAP_KINDS = new Set(['vertex','edge','surface']);
+const SNAP_MARKER_APPEARANCES = Object.freeze({
+  vertex:Object.freeze({kind:'vertex',fill:'#fdb431',glyph:'corner',hoverPixels:28,endpointPixels:24}),
+  edge:Object.freeze({kind:'edge',fill:'#fdb431',glyph:'edge',hoverPixels:28,endpointPixels:24}),
+  surface:Object.freeze({kind:'surface',fill:'rgba(255,255,255,.82)',glyph:'surface',hoverPixels:24,endpointPixels:22}),
+});
+
+export function normalizeSnapKind(kind) {
+  return SNAP_KINDS.has(kind) ? kind : 'surface';
+}
+
+export function snapMarkerAppearance(kind) {
+  return SNAP_MARKER_APPEARANCES[normalizeSnapKind(kind)];
+}
+
+// Pure lifecycle projection used by the renderer snapshot and deterministic tests.
+export function measurementMarkerState(state, hoverKind=null) {
+  const hover=state.active&&hoverKind?{role:'hover',kind:normalizeSnapKind(hoverKind)}:null;
+  const draft=state.active&&state.draft?{role:'endpoint-a',kind:normalizeSnapKind(state.draftKind)}:null;
+  const saved=state.measurements.flatMap(item=>[
+    {measurementId:item.id,role:'endpoint-a',kind:normalizeSnapKind(item.aKind)},
+    {measurementId:item.id,role:'endpoint-b',kind:normalizeSnapKind(item.bKind)},
+  ]);
+  return {hover,draft,saved};
+}
+
+export function screenMarkerWorldSize({depth,fovDegrees,viewportHeight,pixels,orthographicHeight=null}) {
+  if (![viewportHeight,pixels].every(Number.isFinite)||viewportHeight<=0||pixels<=0) return null;
+  if (orthographicHeight!==null) return Number.isFinite(orthographicHeight)&&orthographicHeight>0?orthographicHeight*pixels/viewportHeight:null;
+  if (![depth,fovDegrees].every(Number.isFinite)||depth<=0||fovDegrees<=0||fovDegrees>=180) return null;
+  return 2*depth*Math.tan(fovDegrees*Math.PI/360)*pixels/viewportHeight;
 }
 
 export function reduceMeasurement(state, action) {
   switch (action.type) {
-    case 'ENTER': return {...state, active:true, draft:null, selectedId:null};
-    case 'EXIT': return {...state, active:false, draft:null, selectedId:null};
+    case 'ENTER': return {...state, active:true, draft:null, draftKind:null, selectedId:null};
+    case 'EXIT': return {...state, active:false, draft:null, draftKind:null, selectedId:null};
     case 'PLACE':
       if (!state.active) return state;
-      if (!state.draft) return {...state, draft:[...action.point], selectedId:null};
+      if (!state.draft) return {...state, draft:[...action.point], draftKind:normalizeSnapKind(action.kind), selectedId:null};
       return {
         ...state,
         draft:null,
+        draftKind:null,
         selectedId:action.id,
-        measurements:[...state.measurements, {id:action.id, a:state.draft, b:[...action.point]}],
+        measurements:[...state.measurements, {id:action.id, a:state.draft, b:[...action.point],aKind:normalizeSnapKind(state.draftKind),bKind:normalizeSnapKind(action.kind)}],
       };
-    case 'CANCEL': return {...state, draft:null};
+    case 'CANCEL': return {...state, draft:null, draftKind:null};
     case 'SELECT': return {...state, selectedId:action.id};
     case 'DELETE_SELECTED':
       if (!state.selectedId) return state;

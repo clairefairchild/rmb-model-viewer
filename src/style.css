@@ -131,6 +131,7 @@ progress{width:100%;height:5px;margin-top:18px;accent-color:var(--brand-accent)}
 body.walking .nav-controls{display:none}
 
 body.measuring canvas{cursor:crosshair}
+body.measuring canvas.snap-surface{cursor:crosshair}
 body.measuring canvas.snap-edge{cursor:cell}
 body.measuring canvas.snap-vertex{cursor:copy}
 body[data-drag-mode="pan"] canvas{cursor:grabbing}
