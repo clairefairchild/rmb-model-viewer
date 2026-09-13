@@ -1412,6 +1412,54 @@
       "thumbnail": "equipment-assets/bunn-tdo-n-3-5-39600-0047/preview-ff5c8f13d91f.png",
       "sha256": "173e124a16425deef2ced5e199e8046b2921234ddd31fb335f96ec204299b9aa",
       "sizeBytes": 383512
+    },
+    {
+      "slug": "register-16x16-toast-pos-14",
+      "name": "16-inch register base +14-inch Toast POS visualization",
+      "productName": "16-inch register base +14-inch Toast POS visualization \u00b7v001",
+      "manufacturer": "Toast reference / visualization",
+      "model": "register-16x16-toast-pos-14",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 16,
+        "depth": 16,
+        "height": 16.911828,
+        "unit": "in"
+      },
+      "dimensionLabel": "Base16 \u00d716 \u00d74.4in; active display14in diagonal",
+      "dimensionHeading": "Exact primary design dimensions",
+      "sourceRow": "Frank-approved La Vista v014 revision",
+      "quantity": 1,
+      "approvalStatus": "Dimensioned Visualization",
+      "fidelityNote": "Exact user-authored register dimensions and active diagonal. Official Toast Countertop Starter Kit URL reference; vendor blocked both HTTP and browser retrieval403.16:9 landscape, bezel, normal pedestal and secondary details are visualization-only, not verified OEM geometry. Floorplan uses accepted5.25in overhang per side; no mounting approval.",
+      "asset": "equipment-assets/register-16x16-toast-pos-14/5f644b09a208.glb",
+      "thumbnail": "equipment-assets/register-16x16-toast-pos-14/preview-03b67e65011d.png",
+      "sha256": "5f644b09a20871f7ace8f7920f2b3db65f000015f2e27cc785ab4ed490e4bd72",
+      "sizeBytes": 16396
+    },
+    {
+      "slug": "portrait-kiosk-22-granite-edge-clamp",
+      "name": "22-inch portrait kiosk \u00b7 granite edge clamp",
+      "productName": "22-inch portrait kiosk \u00b7 granite edge clamp \u00b7v001",
+      "manufacturer": "User-designed visualization",
+      "model": "portrait-kiosk-22-granite-edge-clamp",
+      "assetRevision": "v001",
+      "envelope": {
+        "width": 11.385747,
+        "depth": 4.106,
+        "height": 24.107331,
+        "unit": "in"
+      },
+      "dimensionLabel": "Active display22in diagonal \u00b716:9 portrait assumption",
+      "dimensionHeading": "Exact primary design dimensions",
+      "sourceRow": "Frank-approved La Vista v014 revision",
+      "quantity": 4,
+      "approvalStatus": "Dimensioned Visualization",
+      "fidelityNote": "Exact22in active diagonal,10.785747\u00d719.174662in portrait active area. Small bezel, simple arm and edge clamp are visualization-only design geometry. Clamp throat2in, slab thickness0.75in. Front points-Y; clamp upper bearing planeZ0. Use without resizing.",
+      "asset": "equipment-assets/portrait-kiosk-22-granite-edge-clamp/81da4f1a4c01.glb",
+      "thumbnail": "equipment-assets/portrait-kiosk-22-granite-edge-clamp/preview-21b08a1112b1.png",
+      "sha256": "81da4f1a4c011d33b9c32d4eb9e981d0c3221fe2eedc3fdd2b64fdcb9cf4b4be",
+      "sizeBytes": 14436
     }
   ]
 }

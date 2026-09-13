@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Production v012 \u00b7 complete A\u2013H revision \u00b7 corrected finish color",
-      "description": "Complete A\u2013H revision: stainless sink correction, centered wire racks, west-facing Coke and twin tea dispensers, granite-capped tiled pony wall and straight glass, customer-only graphite wainscot and Roni\u2019s yellow trim.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/d8c61064e930.glb",
-      "sizeBytes": 99775156,
-      "sha256": "d8c61064e930d3c221d20b7803c36c6d569afac1ac0cf199ee2d8057a770593a",
-      "disclaimer": "VISUALIZATION ONLY: Hoshizaki F-1002MAJ on Cornelius IDC255 is not manufacturer-approved and is NOT suitable for installation/construction. Native equipment and approved 11/16-inch west/front overhang shown only for spatial review. Prior fitted dip-well opening and hood elevation remain approximate; source equipment limitations retained.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-4614f6992261.png"
+      "revision": "Production v014 \u00b7 kiosks, mural, seating and approved POS",
+      "description": "Four22-inch portrait edge-clamped kiosks,14-inch cashier-facing POS on exact diagonal granite segment, north tile extended to doorway, centered tea pair, supplied83-inch-high booth mural, and native southwest table with four chairs.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/60dee09057eb.glb",
+      "sizeBytes": 102360100,
+      "sha256": "60dee09057ebfa55704c7fb27d97f6c36a8d3cfefab04c97cf45b65e5d3dd942",
+      "disclaimer": "VISUALIZATION ONLY: Hoshizaki F-1002MAJ on Cornelius IDC255 is not manufacturer-approved and is NOT suitable for installation/construction. Native equipment and approved 11/16-inch west/front overhang shown only for spatial review. Prior fitted dip-well opening and hood elevation remain approximate; source equipment limitations retained. Register16\u00d716\u00d74.4in is centered on5.5in granite with expressly accepted5.25in overhang per side for visualization only. POS/kiosk aspect, bezel and stand/clamp details are visualization assumptions, not OEM or mounting certification.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-692f0736c748.png"
     }
   ]
 }
