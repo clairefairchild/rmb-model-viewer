@@ -1238,7 +1238,8 @@
       "asset": "equipment-assets/superior-seating-beech-natural-30x30-complete/7dbfc24c1915.glb",
       "thumbnail": "equipment-assets/superior-seating-beech-natural-30x30-complete/preview-feaa2c07779c.png",
       "sizeBytes": 208732,
-      "sha256": "7dbfc24c19150ddf87f02ea2bbd164758af7052dad351aae8891aa903867f680"
+      "sha256": "7dbfc24c19150ddf87f02ea2bbd164758af7052dad351aae8891aa903867f680",
+      "sourceRow": "18068863074"
     },
     {
       "slug": "superior-seating-beech-natural-30x24-complete",
@@ -1262,7 +1263,8 @@
       "asset": "equipment-assets/superior-seating-beech-natural-30x24-complete/2e19bbf2afde.glb",
       "thumbnail": "equipment-assets/superior-seating-beech-natural-30x24-complete/preview-0217a5f9f936.png",
       "sizeBytes": 304064,
-      "sha256": "2e19bbf2afde1b602473d9a170285eb005a640ac792a6d470cc7441bc74b94d4"
+      "sha256": "2e19bbf2afde1b602473d9a170285eb005a640ac792a6d470cc7441bc74b94d4",
+      "sourceRow": "18068863074"
     },
     {
       "slug": "superior-seating-beech-natural-48x30-complete",
@@ -1286,7 +1288,8 @@
       "asset": "equipment-assets/superior-seating-beech-natural-48x30-complete/96f7ad84a3a1.glb",
       "thumbnail": "equipment-assets/superior-seating-beech-natural-48x30-complete/preview-9dba9ff7c671.png",
       "sizeBytes": 274676,
-      "sha256": "96f7ad84a3a170fd827128cea01c097359359e4ad81ba2b881c7587730a2c558"
+      "sha256": "96f7ad84a3a170fd827128cea01c097359359e4ad81ba2b881c7587730a2c558",
+      "sourceRow": "18068863074"
     },
     {
       "slug": "regency-c-3072-316-60in-variant",
@@ -1310,7 +1313,8 @@
       "asset": "equipment-assets/regency-c-3072-316-60in-variant/d2d19529d5c4.glb",
       "thumbnail": "equipment-assets/regency-c-3072-316-60in-variant/preview-fc6d16d75c2d.png",
       "sizeBytes": 1184080,
-      "sha256": "d2d19529d5c4d373f056d46b386651446e89e91415f047843860d7a4c8edb61e"
+      "sha256": "d2d19529d5c4d373f056d46b386651446e89e91415f047843860d7a4c8edb61e",
+      "sourceRow": "18068861980"
     },
     {
       "slug": "dewell-srb300-single-hook",
@@ -1326,7 +1330,7 @@
         "height": 9.84251968503937,
         "unit": "in"
       },
-      "dimensionLabel": "1.062992125984252 \u00d7 11.811023622047244 \u00d7 9.84251968503937 in \u2014 Planning envelope",
+      "dimensionLabel": "27 \u00d7 300 \u00d7 250 mm (W \u00d7 projection \u00d7 H)",
       "dimensionHeading": "Published dimensions",
       "quantity": 1,
       "approvalStatus": "Approximate Layout Asset",
@@ -1334,7 +1338,8 @@
       "asset": "equipment-assets/dewell-srb300-single-hook/a2362925f68d.glb",
       "thumbnail": "equipment-assets/dewell-srb300-single-hook/preview-9ccc92557471.png",
       "sizeBytes": 29164,
-      "sha256": "a2362925f68de6aeb1d0f73b8415eb2f18de2bc87385726a5d8caa8cb998d427"
+      "sha256": "a2362925f68de6aeb1d0f73b8415eb2f18de2bc87385726a5d8caa8cb998d427",
+      "sourceRow": "ASIN B07S7CQFGF"
     }
   ]
 }
