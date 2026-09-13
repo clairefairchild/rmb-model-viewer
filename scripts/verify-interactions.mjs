@@ -40,6 +40,7 @@ for(const [x,y] of points){await page.mouse.move(box.x+box.width*x,box.y+box.hei
 assert.equal((await page.evaluate(()=>window.modelViewer())).measure.draft,true,'first measurement click locks point A');
 for(const [x,y] of points.slice().reverse()){await page.mouse.move(box.x+box.width*x,box.y+box.height*y);if(!(await page.evaluate(()=>window.modelViewer())).measure.hover)continue;await page.mouse.click(box.x+box.width*x,box.y+box.height*y);if((await page.evaluate(()=>window.modelViewer())).measure.completed)break;}
 let measured=await page.evaluate(()=>window.modelViewer());assert.equal(measured.measure.completed,1,'second click creates a session measurement');assert.match(await page.locator('.measurement-saved').textContent(),/ in$/);assert(measured.measure.selectedId);
+await page.screenshot({path:new URL('equipment-measure.png',out).pathname,fullPage:true});
 await page.keyboard.press('Delete');assert.equal((await page.evaluate(()=>window.modelViewer())).measure.completed,0,'Delete removes selected measurement');
 await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.modelViewer?.().ready,{timeout:120000});assert.equal((await page.evaluate(()=>window.modelViewer())).measure.completed,0,'reload clears session-only measurements');
 await page.screenshot({path:new URL('equipment-desktop.png',out).pathname,fullPage:true});
