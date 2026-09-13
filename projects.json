@@ -26,13 +26,13 @@
     {
       "slug": "roll-em-up-la-vista-floorplan-v001",
       "title": "Roll-Em-Up Taquito\u2019s \u00b7 La Vista",
-      "revision": "Measured floorplan v001 \u00b7 September 2026",
-      "description": "Measured walls, openings, 36-inch counter pony wall, walk-in cooler, restroom, sinks, and reused booth assemblies. Explore the complete full-height model; use Bird\u2019s-eye for the plan.",
-      "asset": "models/roll-em-up-la-vista-floorplan-v001/3fb7c52e1def.glb",
-      "sizeBytes": 271440,
-      "sha256": "3fb7c52e1def4b49127b615100da7b4e858cf3b44b4e35afc1bec46b98351efe",
-      "disclaimer": "Measured from verified permit-plan scale \u00b7 Visualization only, not construction documents or verified as-built. Restroom fixture heights/shapes are approved approximations; booth widths are approved 46-to-48-inch adaptations.",
-      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-56657aa18bbd.png"
+      "revision": "Equipment lineup v004 \u00b7 September 2026",
+      "description": "Employee-side equipment lineup in native sizes, alongside a 34-inch custom stainless worktop and preserved 36-inch pony wall. Use Bird\u2019s-eye, orbit, or walkthrough to inspect the layout.",
+      "asset": "models/roll-em-up-la-vista-floorplan-v001/5b1a5cab2d99.glb",
+      "sizeBytes": 17477292,
+      "sha256": "5b1a5cab2d99d5cc210428a1675c6e6dcda740c359d6551249e3168d0054409a",
+      "disclaimer": "Measured plan + explicit layout design \u00b7 Not construction or installation certification. Source equipment visualization limitations retained; Lincoln is an approximate layout asset and WT-302434 is not exact-product certified. Existing approved restroom and booth approximations unchanged.",
+      "thumbnail": "models/roll-em-up-la-vista-floorplan-v001/preview-9a6112329e9f.png"
     }
   ]
 }
