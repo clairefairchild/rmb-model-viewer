@@ -6,11 +6,11 @@ import blasterUrl from './assets/cartoon-macaroni-blaster.glb?url';
 // never participates in measurement/collision raycasts, and has stable ADS framing.
 export class CheeseBlaster {
  constructor(environment) {
-  this.scene=new THREE.Scene();this.scene.environment=environment;this.scene.environmentIntensity=.65;
+  this.scene=new THREE.Scene();this.scene.environment=environment;this.scene.environmentIntensity=.35;
   this.camera=new THREE.PerspectiveCamera(45,1,.01,10);
-  this.scene.add(new THREE.HemisphereLight(0xfff5df,0x68534a,2));
-  const key=new THREE.DirectionalLight(0xffffff,3);key.position.set(-2,3,3);this.scene.add(key);
-  this.root=new THREE.Group();this.root.scale.setScalar(.62);this.scene.add(this.root);
+  this.scene.add(new THREE.HemisphereLight(0xfff5df,0x68534a,1.1));
+  const key=new THREE.DirectionalLight(0xffffff,1.6);key.position.set(-2,3,3);this.scene.add(key);
+  this.root=new THREE.Group();this.root.scale.setScalar(.42);this.scene.add(this.root);
   this.status='idle';this.recoil=0;this.enabled=false;this.lastShot=null;
   this.reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   this.fallback=new THREE.Group();
@@ -35,8 +35,8 @@ export class CheeseBlaster {
   const motion=!this.reducedMotion.matches,blend=dt?1-Math.exp(-dt*12):1;
   this.recoil=Math.max(0,this.recoil-dt*5);
   const bob=motion&&!aiming?Math.sin(time*.0018)*.003:0;
-  this.root.position.lerp(new THREE.Vector3(aiming?.075:.40,-.34+bob,-.96+(motion?this.recoil*.045:0)),blend);
-  this.root.rotation.set(motion?this.recoil*.065:0,aiming?0:-.16,aiming?0:-.08);
+  this.root.position.lerp(new THREE.Vector3(aiming?.035:.40,(aiming?-.34:-.25)+bob,-1.15+(motion?this.recoil*.045:0)),blend);
+  this.root.rotation.set(motion?this.recoil*.065:.04,aiming?.28:.55,aiming?0:-.10);
   this.scene.updateMatrixWorld(true);
  }
  render(renderer,aspect,dt,time,aiming){
@@ -52,7 +52,7 @@ export class CheeseBlaster {
   const forward=camera.getWorldDirection(new THREE.Vector3());
   local.multiplyScalar(.72/local.dot(forward));
   const origin=camera.position.clone().add(local);
-  this.lastShot={origin:origin.toArray(),muzzleNdc:[ndc.x,ndc.y],asset:this.status};this.recoil=1;
+  this.lastShot={origin:origin.toArray(),muzzleNdc:[ndc.x,ndc.y],asset:this.status,camera:{position:camera.position.toArray(),quaternion:camera.quaternion.toArray(),fov:camera.fov,aspect:camera.aspect}};this.recoil=1;
   return origin;
  }
  snapshot(){const ndc=this.muzzle.getWorldPosition(new THREE.Vector3()).project(this.camera);return {status:this.status,visible:this.enabled,muzzleNdc:[ndc.x,ndc.y],lastShot:this.lastShot};}
