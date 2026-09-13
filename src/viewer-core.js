@@ -1,4 +1,5 @@
 export const METERS_TO_INCHES = 39.37007874015748;
+export const MAX_WHEEL_DELTA_PIXELS = 240;
 
 export function metersToInches(meters) {
   if (!Number.isFinite(meters)) throw new TypeError('Distance must be finite');
@@ -77,4 +78,55 @@ export function reduceShooter(state, action, limits={projectiles:24,splats:40}) 
     case 'CLEAR': return initialShooterState();
     default: return state;
   }
+}
+
+const finiteVector = value => Array.isArray(value) && value.length === 3 && value.every(Number.isFinite);
+const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
+
+export function normalizeWheelDelta(deltaY, deltaMode=0, pagePixels=800, limit=MAX_WHEEL_DELTA_PIXELS) {
+  if (![deltaY,pagePixels,limit].every(Number.isFinite) || pagePixels<=0 || limit<=0) return null;
+  const multiplier=deltaMode===1?16:deltaMode===2?pagePixels:deltaMode===0?1:null;
+  if (multiplier===null) return null;
+  return clamp(deltaY*multiplier,-limit,limit);
+}
+
+// Pure perspective-camera wheel step. Returning null is intentional: callers can
+// leave the complete prior camera state untouched whenever any input/math is bad.
+export function calculateWheelZoom({
+  position,target,focus,hasModelHit,bounds,minDistance,maxDistance,
+  deltaY,deltaMode=0,pagePixels=800,sensitivity=.0015,
+  maxPixelDelta=MAX_WHEEL_DELTA_PIXELS,envelopeExpansion,
+}) {
+  if (!finiteVector(position)||!finiteVector(target)||!bounds||!finiteVector(bounds.min)||!finiteVector(bounds.max)) return null;
+  if (![minDistance,maxDistance,sensitivity].every(Number.isFinite)||minDistance<=0||maxDistance<minDistance||sensitivity<=0) return null;
+  if (bounds.min.some((value,index)=>value>bounds.max[index])) return null;
+  const normalizedDelta=normalizeWheelDelta(deltaY,deltaMode,pagePixels,maxPixelDelta);
+  if (normalizedDelta===null) return null;
+  const actualFocus=hasModelHit?focus:target;
+  if (!finiteVector(actualFocus)) return null;
+  const offset=position.map((value,index)=>value-target[index]);
+  const distance=Math.hypot(...offset);
+  if (!Number.isFinite(distance)||distance<=1e-9) return null;
+  const requestedFactor=Math.exp(normalizedDelta*sensitivity);
+  if (!Number.isFinite(requestedFactor)||requestedFactor<=0) return null;
+  const nextDistance=clamp(distance*requestedFactor,minDistance,maxDistance);
+  const factor=nextDistance/distance;
+  if (!Number.isFinite(factor)||factor<=0) return null;
+  let nextPosition=position.map((value,index)=>actualFocus[index]+(value-actualFocus[index])*factor);
+  let nextTarget=target.map((value,index)=>actualFocus[index]+(value-actualFocus[index])*factor);
+  const diagonal=Math.hypot(...bounds.max.map((value,index)=>value-bounds.min[index]));
+  const expansion=envelopeExpansion===undefined?diagonal*.5:envelopeExpansion;
+  if (!Number.isFinite(expansion)||expansion<0) return null;
+  const envelope={min:bounds.min.map(value=>value-expansion),max:bounds.max.map(value=>value+expansion)};
+  const boundedTarget=nextTarget.map((value,index)=>clamp(value,envelope.min[index],envelope.max[index]));
+  const correction=boundedTarget.map((value,index)=>value-nextTarget[index]);
+  const targetWasClamped=correction.some(value=>value!==0);
+  if (targetWasClamped) {
+    nextPosition=nextPosition.map((value,index)=>value+correction[index]);
+    nextTarget=boundedTarget;
+  }
+  if (!finiteVector(nextPosition)||!finiteVector(nextTarget)) return null;
+  const verifiedDistance=Math.hypot(...nextPosition.map((value,index)=>value-nextTarget[index]));
+  if (!Number.isFinite(verifiedDistance)||verifiedDistance<minDistance-1e-8||verifiedDistance>maxDistance+1e-8) return null;
+  return {position:nextPosition,target:nextTarget,focus:[...actualFocus],normalizedDelta,requestedFactor,factor,distanceBefore:distance,distanceAfter:verifiedDistance,targetWasClamped,envelope};
 }

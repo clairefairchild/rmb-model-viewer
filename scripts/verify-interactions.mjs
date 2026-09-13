@@ -27,9 +27,9 @@ await page.keyboard.down('Shift');const beforeSwitch=await page.evaluate(()=>win
 await page.mouse.move(box.x+box.width*.69,box.y+box.height*.62,{steps:2});const panned=await page.evaluate(()=>window.modelViewer());assert.notDeepEqual(panned.target,baseline.target,'held drag continues as pan after Shift is pressed');
 await page.keyboard.up('Shift');await page.mouse.move(box.x+box.width*.72,box.y+box.height*.63);const releaseBaseline=await page.evaluate(()=>window.modelViewer());await page.mouse.move(box.x+box.width*.76,box.y+box.height*.64,{steps:2});const orbitAgain=await page.evaluate(()=>window.modelViewer());assert.notDeepEqual(orbitAgain.position,releaseBaseline.position,'held drag returns to orbit after Shift release');await page.mouse.up();
 
-// Wheel focus follows the pointer, including a no-hit fallback near a corner.
-await page.getByRole('button',{name:/Home/}).click();await page.mouse.move(box.x+box.width*.5,box.y+box.height*.5);await page.mouse.wheel(0,-120);const centerFocus=(await page.evaluate(()=>window.modelViewer())).lastZoomFocus;
-await page.getByRole('button',{name:/Home/}).click();await page.mouse.move(box.x+18,box.y+box.height-18);await page.mouse.wheel(0,-120);const cornerFocus=(await page.evaluate(()=>window.modelViewer())).lastZoomFocus;assert.notDeepEqual(cornerFocus,centerFocus,'cursor-targeted zoom focus differs at center and bottom corner');
+// A model hit follows the pointer; empty canvas uses the stable controls target.
+await page.getByRole('button',{name:/Home/}).click();await page.mouse.move(box.x+box.width*.5,box.y+box.height*.5);await page.mouse.wheel(0,-120);const centerZoom=(await page.evaluate(()=>window.modelViewer())).lastZoom;assert.equal(centerZoom.kind,'model');
+await page.getByRole('button',{name:/Home/}).click();const cornerStart=await page.evaluate(()=>window.modelViewer());await page.mouse.move(box.x+3,box.y+box.height-3);await page.mouse.wheel(0,-120);const cornerState=await page.evaluate(()=>window.modelViewer());assert.equal(cornerState.lastZoom.kind,'target');assert(cornerState.target.every((value,index)=>Math.abs(value-cornerStart.target[index])<1e-12),'empty-canvas wheel cannot walk the target away from the scene');
 await page.getByRole('button',{name:/Home/}).click();
 await page.screenshot({path:new URL('equipment-before-measure.png',out).pathname,fullPage:true});
 

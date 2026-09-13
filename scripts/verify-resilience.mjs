@@ -6,7 +6,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use
 const checks=[];
 try{
  const desktop=await browser.newContext({viewport:{width:1440,height:960}});const page=await desktop.newPage();
- assert.equal((await page.goto(base)).status(),200);await page.locator('.card').waitFor();assert.equal(await page.locator('.card').count(),1);await page.waitForFunction(()=>[...document.querySelectorAll('.card img')].every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:new URL('../evidence/library.png',import.meta.url).pathname,fullPage:true});checks.push('Live library renders first project');
+ assert.equal((await page.goto(base)).status(),200);await page.locator('.card').first().waitFor();assert((await page.locator('.card').count())>=1);await page.waitForFunction(()=>[...document.querySelectorAll('.card img')].every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:new URL('../evidence/library.png',import.meta.url).pathname,fullPage:true});checks.push('Live library renders published projects');
  await page.goto(base+'not-a-real-project/');await page.locator('#error').waitFor();assert.match(await page.locator('#error-message').textContent(),/not in the catalog/);checks.push('Unknown project gives useful recovery link');
  await page.route('**/*.glb',async route=>{await new Promise(r=>setTimeout(r,750));await route.abort('failed');});
  await page.goto(base+'ronis-renovation-001/');await page.locator('#loading').waitFor();await page.locator('#error').waitFor();assert.match(await page.locator('#error-message').textContent(),/could not be downloaded/);checks.push('Loading status and failed model download recovery work');await desktop.close();

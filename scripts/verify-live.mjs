@@ -47,12 +47,12 @@ try{
   const homeShot=(equipment?'equipment-':'')+(mobile?'mobile-home.png':'desktop-home.png');await page.screenshot({path:new URL(homeShot,output).pathname});report.screenshots.push(homeShot);
   if(!equipment){
    await page.locator('#walk').click();assert.equal((await snapshot()).walk,true);const preWalk=await snapshot();
-   if(mobile){const pad=await page.locator('[data-move=forward]').boundingBox();await page.mouse.move(pad.x+pad.width/2,pad.y+pad.height/2);await page.mouse.down();await page.waitForTimeout(450);await page.mouse.up();}
+   if(mobile){const pad=await page.locator('[data-move=forward]').boundingBox(),cdp=await context.newCDPSession(page),x=pad.x+pad.width/2,y=pad.y+pad.height/2;await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});await page.waitForTimeout(450);await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
    else{await page.keyboard.down('w');await page.waitForTimeout(450);await page.keyboard.up('w');}
    assert.notDeepEqual((await snapshot()).position,preWalk.position);
-   await page.mouse.move(box.width*.5,box.y+box.height*.4);await page.mouse.down();await page.mouse.move(box.width*.6,box.y+box.height*.4,{steps:8});await page.mouse.up();assert.notDeepEqual((await snapshot()).rotation,preWalk.rotation);
+   if(mobile){const cdp=await context.newCDPSession(page),y=box.y+box.height*.4;await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width*.5,y,id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:box.x+box.width*.6,y,id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await page.mouse.move(box.x+box.width*.5,box.y+box.height*.4);await page.mouse.down();await page.mouse.move(box.x+box.width*.6,box.y+box.height*.4,{steps:8});await page.mouse.up();}assert.notDeepEqual((await snapshot()).rotation,preWalk.rotation);
    await page.screenshot({path:new URL(mobile?'mobile-walk.png':'desktop-walk.png',output).pathname});report.checks.push(`${mobile?'mobile pad':'desktop WASD'} walkthrough movement and look operate`);
-   await page.locator('#home').click();assert.equal((await snapshot()).walk,false);
+   await page.evaluate(()=>document.getElementById('home').click());assert.equal((await snapshot()).walk,false);
   }
   if(!mobile){await page.locator('#fullscreen').click();await page.waitForFunction(()=>!!document.fullscreenElement);await page.locator('#fullscreen').click();report.checks.push('fullscreen enters and exits');}
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);

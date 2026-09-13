@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
-import {chooseSnapCandidate,formatInches,initialMeasurementState,reduceMeasurement,initialShooterState,reduceShooter,METERS_TO_INCHES} from './viewer-core.js';
+import {calculateWheelZoom,chooseSnapCandidate,formatInches,initialMeasurementState,reduceMeasurement,initialShooterState,reduceShooter,METERS_TO_INCHES} from './viewer-core.js';
 import './style.css';
 import {CheeseBlaster} from './cheese-blaster.js';
 
@@ -95,7 +95,7 @@ function initialize(){
  const sun=new THREE.DirectionalLight(0xfff4dc,2.1);sun.name='studio-sun';sun.position.set(-8,18,8);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.bias=-.00015;sun.shadow.normalBias=.025;scene.add(sun);scene.add(sun.target);
  camera=new THREE.PerspectiveCamera(45,1,.025,1000);controls=new OrbitControls(camera,$('canvas'));controls.enableDamping=true;controls.dampingFactor=.1;controls.maxPolarAngle=Math.PI/2-.01;controls.screenSpacePanning=true;navigation('orbit');
  blaster=new CheeseBlaster(scene.environment);setupMeasurementGraphics();new ResizeObserver(resize).observe($('viewer'));resize();wireControls();renderer.setAnimationLoop(animate);
- Object.defineProperty(window,'modelViewer',{value:()=>({...state,position:camera.position.toArray(),target:controls.target.toArray(),rotation:camera.rotation.toArray().slice(0,3),fov:camera.fov,walk,pointerLocked,measure:{active:measurementState.active,draft:!!measurementState.draft,completed:measurementState.measurements.length,selectedId:measurementState.selectedId,hover:!!hoverCandidate,hoverKind:hoverCandidate?.kind||null},shooter:{...shooterState,blaster:blaster.snapshot(),effects:{projectiles:projectiles.length,splats:splats.length}}}),writable:false});
+ Object.defineProperty(window,'modelViewer',{value:()=>({...state,position:camera.position.toArray(),target:controls.target.toArray(),rotation:camera.rotation.toArray().slice(0,3),fov:camera.fov,walk,pointerLocked,zoomLimits:{minDistance:controls.minDistance,maxDistance:controls.maxDistance},measure:{active:measurementState.active,draft:!!measurementState.draft,completed:measurementState.measurements.length,selectedId:measurementState.selectedId,hover:!!hoverCandidate,hoverKind:hoverCandidate?.kind||null},shooter:{...shooterState,blaster:blaster.snapshot(),effects:{projectiles:projectiles.length,splats:splats.length}}}),writable:false});
 }
 function setupMeasurementGraphics(){measurementGroup=new THREE.Group();measurementGroup.name='viewer-measurements';scene.add(measurementGroup);candidatePoint=new THREE.Mesh(new THREE.SphereGeometry(.025,16,10),new THREE.MeshBasicMaterial({color:0xfdb431,depthTest:false,transparent:true,opacity:.95}));candidatePoint.renderOrder=1000;candidatePoint.visible=false;measurementGroup.add(candidatePoint);draftLine=new THREE.Line(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:0xfdb431,depthTest:false,transparent:true,opacity:.95}));draftLine.renderOrder=999;draftLine.visible=false;measurementGroup.add(draftLine);}
 
@@ -133,10 +133,10 @@ function setPointer(event){const rect=$('canvas').getBoundingClientRect();pointe
 function visibleIntersections(){if(!model)return[];return raycaster.intersectObject(model,true).filter(hit=>{for(let object=hit.object;object;object=object.parent)if(object.visible===false)return false;return true;});}
 function hitAt(event){setPointer(event);return visibleIntersections()[0]||null;}
 function onWheel(event){
- if(!state.ready||walk)return;consumePointer(event);const rect=setPointer(event),hit=visibleIntersections()[0];let focus=hit?.point?.clone();if(!focus){const normal=camera.getWorldDirection(new THREE.Vector3()),plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,controls.target);focus=raycaster.ray.intersectPlane(plane,new THREE.Vector3())||controls.target.clone();}
- const delta=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?rect.height:1),requested=Math.exp(delta*.0015);
- if(camera.isOrthographicCamera){const before=focus.clone().project(camera),oldZoom=camera.zoom;camera.zoom=THREE.MathUtils.clamp(oldZoom/requested,controls.minZoom||.01,controls.maxZoom||100);camera.updateProjectionMatrix();const after=new THREE.Vector3(before.x,before.y,before.z).unproject(camera),translation=focus.clone().sub(after);camera.position.add(translation);controls.target.add(translation);}else{const distance=camera.position.distanceTo(controls.target),clamped=THREE.MathUtils.clamp(distance*requested,controls.minDistance,controls.maxDistance),factor=clamped/distance;camera.position.copy(focus).add(camera.position.clone().sub(focus).multiplyScalar(factor));controls.target.copy(focus).add(controls.target.clone().sub(focus).multiplyScalar(factor));}
- controls.update();state.lastZoomFocus=focus.toArray();
+ if(!state.ready||walk)return;consumePointer(event);const rect=setPointer(event),hit=visibleIntersections()[0],focus=hit?.point?.toArray();
+ const next=calculateWheelZoom({position:camera.position.toArray(),target:controls.target.toArray(),focus,hasModelHit:!!hit,bounds:{min:bounds.min.toArray(),max:bounds.max.toArray()},minDistance:controls.minDistance,maxDistance:controls.maxDistance,deltaY:event.deltaY,deltaMode:event.deltaMode,pagePixels:rect.height,envelopeExpansion:radius});
+ if(!next)return;
+ camera.position.fromArray(next.position);controls.target.fromArray(next.target);controls.update();state.lastZoom={kind:hit?'model':'target',focus:next.focus,normalizedDelta:next.normalizedDelta,factor:next.factor,distanceBefore:next.distanceBefore,distanceAfter:next.distanceAfter,targetWasClamped:next.targetWasClamped,envelope:next.envelope};
 }
 
 function updateHoverFromEvent(event,immediate=false){hoverEvent={clientX:event.clientX,clientY:event.clientY};if(immediate){updateMeasurementHover(hoverEvent);return;}if(hoverRequest)return;hoverRequest=requestAnimationFrame(()=>{hoverRequest=0;if(hoverEvent)updateMeasurementHover(hoverEvent);});}
