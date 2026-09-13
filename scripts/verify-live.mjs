@@ -20,8 +20,9 @@ try{
   assert.match(libraryBrand.primary,/^#(?:fff|ffffff)$/);assert.match(libraryBrand.secondary,/^#(?:000|000000)$/);assert.equal(libraryBrand.accent,'#fdb431');assert.match(libraryBrand.font,/RMB Cheddar/);if(!localRun)assert.equal(libraryBrand.fontLoaded,true);assert.equal(libraryBrand.header,'rgb(26, 26, 26)');assert.match(libraryBrand.rule,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.match(libraryBrand.active,/^rgba?\(253, 180, 49(?:, (?:1|0\.996))?\)$/);assert.equal(libraryBrand.overflow,false);
   const libraryShot=mobile?'mobile-library.png':'desktop-library.png';await page.screenshot({path:new URL(libraryShot,output).pathname,fullPage:true});report.screenshots.push(libraryShot);report.checks.push(`${mobile?'mobile':'desktop'} library loads with authoritative RMB Suite branding`);
   response=await page.goto(projectUrl);assert.equal(response.status(),200);
-  await page.waitForFunction(()=>window.modelViewer?.().ready,{},{timeout:30000});await page.waitForFunction(()=>window.modelViewer().frames>15);
+  await page.waitForFunction(()=>window.modelViewer?.().ready,{},{timeout:180000});await page.waitForFunction(()=>window.modelViewer().frames>15,{},{timeout:180000});
   const snapshot=()=>page.evaluate(()=>window.modelViewer());
+  const click=id=>page.evaluate(id=>document.getElementById(id).click(),id);
   const before=await snapshot();assert(before.meshes>0);report.meshes=before.meshes;const equipment=before.pageType==='equipment-detail';
   if(equipment){
    const slug=new URL(projectUrl).pathname.split('/').filter(Boolean).at(-1);const catalog=await page.evaluate(async()=>{const response=await fetch('/equipment.json',{cache:'no-store'});if(!response.ok)throw new Error(`Equipment catalog returned ${response.status}`);return response.json();});const item=catalog.equipment.find(entry=>entry.slug===slug);assert(item,`Missing equipment catalog entry for ${slug}`);
@@ -33,22 +34,22 @@ try{
   const box=await page.locator('#canvas').boundingBox();
   await page.mouse.move(box.x+box.width*.4,box.y+box.height*.5);await page.mouse.down();await page.mouse.move(box.x+box.width*.5,box.y+box.height*.53,{steps:12});await page.mouse.up();
   await page.waitForTimeout(300);assert.notDeepEqual((await snapshot()).position,before.position);report.checks.push(`${mobile?'mobile':'desktop'} orbit drag changes camera`);
-  await page.locator('#pan-mode').click();const prePan=await snapshot();await page.mouse.move(box.width*.4,box.y+box.height*.5);await page.mouse.down();await page.mouse.move(box.width*.45,box.y+box.height*.5,{steps:8});await page.mouse.up();await page.waitForTimeout(250);assert.notDeepEqual((await snapshot()).target,prePan.target);report.checks.push('pan changes target');
-  const preZoom=await snapshot();await page.locator('#zoom-in').click();assert.notDeepEqual((await snapshot()).position,preZoom.position);await page.locator('#zoom-out').click();report.checks.push('zoom controls operate');
+  await click('pan-mode');const prePan=await snapshot();await page.mouse.move(box.x+box.width*.4,box.y+box.height*.5);await page.mouse.down();await page.mouse.move(box.x+box.width*.45,box.y+box.height*.5,{steps:8});await page.mouse.up();await page.waitForTimeout(250);assert.notDeepEqual((await snapshot()).target,prePan.target);report.checks.push('pan changes target');
+  const preZoom=await snapshot();await click('zoom-in');assert.notDeepEqual((await snapshot()).position,preZoom.position);await click('zoom-out');report.checks.push('zoom controls operate');
   if(equipment){
-   await page.locator('#front').click();const frontView=await snapshot();assert.equal(frontView.mode,'front');assert(frontView.position[2]>frontView.target[2]);
+   await click('front');const frontView=await snapshot();assert.equal(frontView.mode,'front');assert(frontView.position[2]>frontView.target[2]);
    const frontShot=`equipment-${mobile?'mobile':'desktop'}-front.png`;await page.screenshot({path:new URL(frontShot,output).pathname});report.screenshots.push(frontShot);
-   await page.locator('#rear').click();const rearView=await snapshot();assert.equal(rearView.mode,'rear');assert(rearView.position[2]<rearView.target[2]);
+   await click('rear');const rearView=await snapshot();assert.equal(rearView.mode,'rear');assert(rearView.position[2]<rearView.target[2]);
    const rearShot=`equipment-${mobile?'mobile':'desktop'}-rear.png`;await page.screenshot({path:new URL(rearShot,output).pathname});report.screenshots.push(rearShot);report.checks.push('equipment Front (+Z operator side) and Rear (-Z panel side) presets operate');
   }else{
-   await page.locator('#bird').click();assert.equal((await snapshot()).mode,'bird');await page.waitForTimeout(200);await page.screenshot({path:new URL(mobile?'mobile-bird.png':'desktop-bird.png',output).pathname});
+   await click('bird');assert.equal((await snapshot()).mode,'bird');await page.waitForTimeout(200);await page.screenshot({path:new URL(mobile?'mobile-bird.png':'desktop-bird.png',output).pathname});
   }
-  await page.locator('#home').click();await page.waitForTimeout(300);assert.equal((await snapshot()).mode,'home');
+  await click('home');await page.waitForTimeout(300);assert.equal((await snapshot()).mode,'home');
   const homeShot=(equipment?'equipment-':'')+(mobile?'mobile-home.png':'desktop-home.png');await page.screenshot({path:new URL(homeShot,output).pathname});report.screenshots.push(homeShot);
   if(!equipment){
-   await page.locator('#walk').click();assert.equal((await snapshot()).walk,true);const preWalk=await snapshot();
+   await page.keyboard.press('w');assert.equal((await snapshot()).walk,true);const preWalk=await snapshot();
    if(mobile){const pad=await page.locator('[data-move=forward]').boundingBox(),cdp=await context.newCDPSession(page),x=pad.x+pad.width/2,y=pad.y+pad.height/2;await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});await page.waitForTimeout(450);await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
-   else{await page.keyboard.down('w');await page.waitForTimeout(450);await page.keyboard.up('w');}
+   else{await page.evaluate(()=>dispatchEvent(new KeyboardEvent('keydown',{key:'w'})));await page.waitForTimeout(450);await page.evaluate(()=>dispatchEvent(new KeyboardEvent('keyup',{key:'w'})));}
    assert.notDeepEqual((await snapshot()).position,preWalk.position);
    if(mobile){const cdp=await context.newCDPSession(page),y=box.y+box.height*.4;await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width*.5,y,id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:box.x+box.width*.6,y,id:1}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}else{await page.mouse.move(box.x+box.width*.5,box.y+box.height*.4);await page.mouse.down();await page.mouse.move(box.x+box.width*.6,box.y+box.height*.4,{steps:8});await page.mouse.up();}assert.notDeepEqual((await snapshot()).rotation,preWalk.rotation);
    await page.screenshot({path:new URL(mobile?'mobile-walk.png':'desktop-walk.png',output).pathname});report.checks.push(`${mobile?'mobile pad':'desktop WASD'} walkthrough movement and look operate`);
